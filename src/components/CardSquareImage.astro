@@ -1,0 +1,21 @@
+---
+import {Image} from "astro:assets";
+import type {ImageMetadata} from "astro";
+
+interface Props {
+    src: ImageMetadata;
+    title: string;
+    subtitle: string;
+}
+
+const {src, title, subtitle} = Astro.props;
+---
+<div class="flex flex-col items-center text-center space-y-4 rounded-2xl border p-6">
+    <Image src={src} alt="" class="aspect-square object-cover object-center rounded-xl"/>
+    <div class="p-2 space-y-2">
+        <h3 class="text-xl font-bold text-primary">{title}</h3>
+        <p class="text-sm text-muted-foreground text-center">
+            {subtitle}
+        </p>
+    </div>
+</div>

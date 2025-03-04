@@ -1,78 +1,66 @@
 ---
 import {Card, CardHeader, CardTitle} from "@/components/ui/card"
 import Layout from "../../layouts/Layout.astro";
+import {getCollection} from "astro:content";
+import {Image} from 'astro:assets';
+import Instagram from "../../components/icons/Instagram.astro";
+import GitHub from "../../components/icons/GitHub.astro";
+import LinkedIn from "../../components/icons/LinkedIn.astro";
+import Facebook from "../../components/icons/Facebook.astro";
 
-// Sample data - replace with actual class members
-const members = [
-    {
-        id: 1,
-        name: "Muhammad Maulana Yusuf",
-        role: "Class Leader",
-        image: "/placeholder.svg?height=100&width=100",
-    },
-    {
-        id: 2,
-        name: "Student Name 2",
-        role: "Secretary",
-        image: "/placeholder.svg?height=100&width=100",
-    },
-    {
-        id: 3,
-        name: "Student Name 3",
-        role: "Treasurer",
-        image: "/placeholder.svg?height=100&width=100",
-    },
-    {
-        id: 4,
-        name: "Student Name 4",
-        role: "Student",
-        image: "/placeholder.svg?height=100&width=100",
-    },
-    {
-        id: 5,
-        name: "Student Name 5",
-        role: "Student",
-        image: "/placeholder.svg?height=100&width=100",
-    },
-    {
-        id: 6,
-        name: "Student Name 6",
-        role: "Student",
-        image: "/placeholder.svg?height=100&width=100",
-    },
-    {
-        id: 7,
-        name: "Student Name 7",
-        role: "Student",
-        image: "/placeholder.svg?height=100&width=100",
-    },
-    {
-        id: 8,
-        name: "Student Name 8",
-        role: "Student",
-        image: "/placeholder.svg?height=100&width=100",
-    },
-]
+const members = await getCollection("member");
+members.sort((a, b) => a.id.localeCompare(b.id));
+members.sort((a, b) => (a.data.isLeader === b.data.isLeader) ? 0 : a.data.isLeader ? -1 : 1)
 ---
-<Layout>
+<Layout title="Our Class Member">
     <div class="container py-12">
         <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Our Class Members</h1>
-            <p class="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
+            <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary">Our Class Members</h1>
+            <p class="mx-auto max-w-[700px] text-muted-foreground md:text-md">
                 Meet the talented students of TERPAL B 24
             </p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {members.map((member) => (
-                    <Card key={member.id} className="overflow-hidden">
+            {members.map(({data}) => (
+                    <Card className="overflow-hidden shadow-none p-0">
                         <div class="aspect-square relative">
-                            <img src={member.image || "/placeholder.svg"} alt={member.name}
-                                 class="object-cover w-full h-full"/>
+                            <Image src={data.photo} alt={data.name}
+                                   class="object-cover w-full h-full"/>
                         </div>
-                        <CardHeader className="p-4">
-                            <CardTitle className="text-lg">{member.name}</CardTitle>
-                            <p class="text-sm text-muted-foreground">{member.role}</p>
+                        <CardHeader className="px-6 pb-6 space-y-2">
+                            <CardTitle className="text-lg text-primary font-bold">{data.name}</CardTitle>
+                            <p class="text-sm text-muted-foreground">{data.quote}</p>
+                            <div class="inline-flex flex-wrap items-center gap-2">
+                                {data.socials.facebook ? (
+                                                <a href={data.socials.facebook} target="_blank" rel="noreferrer"
+                                                   class="text-[#0866FF]">
+                                                    <Facebook class="w-6 h-6"/>
+                                                </a>
+                                    ) :
+                                        <Fragment/>}
+                                {data.socials.instagram ? (
+                                                <a href={data.socials.instagram} target="_blank" rel="noreferrer"
+                                                   class="text-[#FF0069]">
+                                                    <Instagram class="w-6 h-6"/>
+                                                </a>
+                                    ) :
+                                        <Fragment/>}
+                                {data.socials.github ? (
+                                                <a href={data.socials.github} target="_blank" rel="noreferrer"
+                                                   class="text-[#181717]">
+                                                    <GitHub class="w-6 h-6"/>
+                                                </a>
+                                    ) :
+                                        <Fragment/>}
+                                {data.socials.linkedin ? (
+                                                <a href={data.socials.linkedin} target="_blank" rel="noreferrer"
+                                                   class="text-[#0a66c2]">
+                                                    <LinkedIn class="w-6 h-6"/>
+                                                </a>
+                                    ) :
+                                        <Fragment/>}
+                            </div>
                         </CardHeader>
                     </Card>
             ))}

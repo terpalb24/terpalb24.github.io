@@ -1,8 +1,8 @@
 ---
 import '@fontsource-variable/inter';
 import "../styles/global.css";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
 import {ClientRouter} from 'astro:transitions';
 
 interface Props {
@@ -24,7 +24,7 @@ const fullTitle = title ? title + " - Terpal B24" : "Terpal B24";
 <body>
 <div class="flex min-h-screen flex-col">
     <Header/>
-    <main class="flex-1">
+    <main class="flex-1 pt-20">
         <slot/>
     </main>
     <Footer/>
