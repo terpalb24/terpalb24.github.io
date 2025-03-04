@@ -1,0 +1,39 @@
+---
+import NavbarMobile from './navbar-mobile';
+
+const navigation = [
+    {name: "Home", href: "/"},
+    {name: "Members", href: "/members"},
+    {name: "Documentation", href: "/documentation"},
+    {name: "Projects", href: "/projects"},
+    {name: "Schedule", href: "/schedule"},
+    {name: "Lecturers", href: "/lecturers"},
+];
+const pathname = Astro.url.pathname;
+---
+<header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <div class="container flex h-16 items-center justify-between">
+        <div class="flex items-center gap-2">
+            <a href="/" class="font-bold text-xl">
+                TERPAL B 24
+            </a>
+        </div>
+
+        {/* Desktop navigation */}
+        <nav class="hidden md:flex items-center gap-6">
+            {navigation.map((item) => (
+                    <a
+                            href={item.href}
+                            class={`text-sm font-medium transition-colors hover:text-primary ${
+                                pathname === item.href ? "text-primary" : "text-muted-foreground"
+                            }`}
+                    >
+                        {item.name}
+                    </a>
+            ))}
+        </nav>
+
+        {/* Mobile navigation */}
+        <NavbarMobile client:load items={navigation} pathname={pathname}/>
+    </div>
+</header>
