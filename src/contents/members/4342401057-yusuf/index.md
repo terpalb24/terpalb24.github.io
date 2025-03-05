@@ -1,4 +1,5 @@
 ---
+nim: 4342401057
 name: Muhammad Maulana Yusuf
 isLeader: true
 quote: Master Desain

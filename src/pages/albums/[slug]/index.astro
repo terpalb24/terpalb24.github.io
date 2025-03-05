@@ -1,0 +1,48 @@
+---
+import {getCollection, render} from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import {CalendarHeartIcon, MapPin} from "lucide-react";
+import {renderDate} from "../../../lib/date";
+import {Badge} from "@/components/ui/badge";
+import {Image} from "astro:assets";
+
+export async function getStaticPaths() {
+    const albums = await getCollection('album');
+    return albums.map(album => ({
+        params: {slug: album.id},
+        props: {album},
+    }));
+}
+
+const {album} = Astro.props;
+if (!album) {
+    // Handle Error, for example:
+    throw new Error('Could not find album!');
+}
+const {data} = album;
+const {Content} = await render(album);
+---
+<Layout title={data.title}>
+    <div class="container py-12">
+        <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+
+            <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary">{data.title}</h1>
+            <div class="mx-auto max-w-[700px] text-muted-foreground">
+                <Content/>
+            </div>
+            <div class="flex items-center gap-2">
+                <Badge variant="secondary">
+                    <MapPin/>
+                    {data.location}</Badge>
+                <Badge variant="secondary">
+                    <CalendarHeartIcon/>
+                    {renderDate(data.date)}</Badge>
+            </div>
+        </div>
+        <div class="flex items-center justify-center gap-4 flex-wrap">
+            {data.contents.map((item) => (
+                    <Image src={item} alt="" class="max-h-[500px] w-auto rounded-2xl"/>
+            ))}
+        </div>
+    </div>
+</Layout>

@@ -25,7 +25,7 @@ const pathname = Astro.url.pathname;
                     <a
                             href={item.href}
                             class={`text-sm font-medium transition-colors hover:text-primary ${
-                                pathname === item.href ? "text-primary" : "text-muted-foreground"
+                                (item.href == "/" ? pathname === item.href : pathname.startsWith(item.href)) ? "text-primary" : "text-muted-foreground"
                             }`}
                     >
                         {item.name}

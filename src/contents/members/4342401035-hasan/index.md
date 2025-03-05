@@ -1,4 +1,5 @@
 ---
+nim: 4342401035
 name: Muhammad Hasan Firdaus
 quote: Ordinary People With Extra Ordinary Dreams
 photo: ./hasan.jpg

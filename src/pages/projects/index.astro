@@ -1,94 +1,68 @@
 ---
-import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
-import {Link} from "@/components/link";
-import {ExternalLink} from "lucide-react";
-
+import {Image} from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
-const projects = [
-    {
-        id: 1,
-        title: "E-Commerce Platform",
-        description:
-            "A full-stack e-commerce application with user authentication, product catalog, and payment processing.",
-        technologies: ["React", "Node.js", "MongoDB", "Stripe"],
-        image: "/placeholder.svg?height=200&width=400",
-        link: "#",
-        team: ["Student 1", "Student 2", "Student 3"],
-    },
-    {
-        id: 2,
-        title: "Task Management System",
-        description: "A collaborative task management application with real-time updates and team collaboration features.",
-        technologies: ["Next.js", "Firebase", "Tailwind CSS"],
-        image: "/placeholder.svg?height=200&width=400",
-        link: "#",
-        team: ["Student 4", "Student 5", "Student 6"],
-    },
-    {
-        id: 3,
-        title: "Mobile Learning App",
-        description: "A cross-platform mobile application for interactive learning with quizzes and progress tracking.",
-        technologies: ["React Native", "Express", "PostgreSQL"],
-        image: "/placeholder.svg?height=200&width=400",
-        link: "#",
-        team: ["Student 7", "Student 8", "Student 9"],
-    },
-    {
-        id: 4,
-        title: "Smart Home Dashboard",
-        description: "An IoT dashboard for monitoring and controlling smart home devices with data visualization.",
-        technologies: ["Vue.js", "Python", "MQTT", "Chart.js"],
-        image: "/placeholder.svg?height=200&width=400",
-        link: "#",
-        team: ["Student 10", "Student 11", "Student 12"],
-    },
-]
+import {getCollection} from "astro:content";
+import {getEntries} from "astro:content";
+
+const projects = await getCollection("project");
+const manpros = await getEntries(projects.map(item => item.data.manpro));
+const teams = await getEntries(projects.flatMap(item => item.data.team));
 ---
-<Layout>
+<Layout title="Our Projects">
     <div class="container py-12">
         <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary">Team Projects</h1>
+            <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary">Our Projects</h1>
             <p class="mx-auto max-w-[700px] text-muted-foreground">
                 Explore the innovative projects developed by TERPAL B 24 students
             </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project) => (
-                    <Card key={project.id} className="overflow-hidden flex flex-col">
-                        <div class="aspect-video relative">
-                            <img
-                                    src={project.image || "/placeholder.svg"}
-                                    alt={project.title}
-                                    class="object-cover w-full h-full"
-                            />
-                        </div>
-                        <CardHeader>
-                            <CardTitle>{project.title}</CardTitle>
-                            <div class="flex flex-wrap gap-2 mt-2">
-                                {project.technologies.map((tech) => (
-                                        <Badge key={tech} variant="secondary">
-                                            {tech}
-                                        </Badge>
-                                ))}
+            {projects.map(({data}) => {
+                const manpro = manpros.find(item => item.id === data.manpro.id);
+                const members = data.team.map(item => {
+                    return teams.find(team => team.id === item.id);
+                })
+                return (
+                        <Card className="overflow-hidden flex flex-col shadow-none pt-0">
+                            <div class="aspect-video relative">
+                                <Image
+                                        src={data.cover}
+                                        alt={data.title}
+                                        class="object-cover w-full aspect-video"
+                                />
                             </div>
-                        </CardHeader>
-                        <CardContent className="flex-grow">
-                            <p class="text-muted-foreground">{project.description}</p>
-                            <div class="mt-4">
-                                <p class="font-medium">Team Members:</p>
-                                <p class="text-sm text-muted-foreground">{project.team.join(", ")}</p>
-                            </div>
-                        </CardContent>
-                        <CardFooter>
-                            <Link variant="outline" className="w-full" href={project.link} target="_blank">
-                                View Project
-                                <ExternalLink className="ml-2 h-4 w-4"/>
-                            </Link>
-                        </CardFooter>
-                    </Card>
-            ))}
+                            <CardHeader>
+                                <CardTitle>{data.code}{" : "}{data.name}</CardTitle>
+                                <div class="flex flex-wrap gap-2 mt-2">
+                                    {data.tags.map((tag) => (
+                                            <Badge variant="secondary">
+                                                {tag}
+                                            </Badge>
+                                    ))}
+                                </div>
+                            </CardHeader>
+                            <CardContent className="flex-grow">
+                                <p class="text-muted-foreground">{data.title}</p>
+                                <div class="mt-4">
+                                    <p class="font-medium">Project Manager:</p>
+                                    <p class="text-sm text-muted-foreground">{manpro?.data.nik}
+                                        - {manpro?.data.name}</p>
+                                </div>
+                                <div class="mt-4 space-y-1">
+                                    <p class="font-medium">Team Members:</p>
+                                    {members.map((member) => member ? (
+                                                    <p class="text-sm text-muted-foreground">{member.data.nim}
+                                                        - {member.data.name}</p>
+                                        ) :
+                                            <Fragment/>)}
+                                </div>
+                            </CardContent>
+                        </Card>
+                );
+            })}
         </div>
     </div>
 </Layout>

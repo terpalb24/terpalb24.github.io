@@ -28,7 +28,7 @@ const NavbarMobile: React.FC<Props> = ({items, pathname}) => {
                         key={item.name}
                         href={item.href}
                         className={`text-sm font-medium transition-colors hover:text-primary px-4 ${
-                            pathname === item.href ? "text-primary" : "text-muted-foreground"
+                            (item.href == "/" ? pathname === item.href : pathname.startsWith(item.href)) ? "text-primary" : "text-muted-foreground"
                         }`}
                     >
                         {item.name}
