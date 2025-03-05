@@ -1,14 +1,21 @@
 ---
+import type {ReferenceDataEntry} from "astro:content";
 import ScheduleContent from "../../components/schedule-content";
 import Layout from "../../layouts/Layout.astro";
+import {getCollection, getEntries} from "astro:content";
+
+const schedules = await getCollection("schedule");
+const subjects = await getEntries(schedules.flatMap(item => item.data.items.flatMap(child => child.subjectCode)));
+const entries = [...subjects.map(item => item.data.theory), ...subjects.map(item => item.data.practice)].filter(Boolean) as ReferenceDataEntry<"lecturer", string>[];
+const lecturers = await getEntries(entries)
 ---
-<Layout>
+<Layout title="Schedule">
     <div class="container py-12">
         <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
             <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary">Class Schedule</h1>
             <p class="mx-auto max-w-[700px] text-muted-foreground">Weekly timetable for TERPAL B 24</p>
         </div>
 
-        <ScheduleContent client:load/>
+        <ScheduleContent items={schedules} subjects={subjects} lecturers={lecturers} client:load/>
     </div>
 </Layout>

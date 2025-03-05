@@ -33,15 +33,21 @@ const lecturer = defineCollection({
     loader: glob({pattern: "**/*.md", base: "./src/contents/lecturers"}),
     schema: ({image}) => z.object({
         nik: z.number(),
+        code: z.string(),
         name: z.string(),
         specialization: z.string(),
         isGuardianLecturer: z.boolean().optional(),
         photo: image(),
-        subjects: z.array(z.object({
-            name: z.string(),
-            code: z.string(),
-            type: z.enum(['Theory', 'Practice', 'Theory & Practice']),
-        })).optional()
+    })
+});
+
+const subject = defineCollection({
+    loader: glob({pattern: "**/*.md", base: "./src/contents/subjects"}),
+    schema: z.object({
+        code: z.string(),
+        title: z.string(),
+        theory: reference("lecturer"),
+        practice: reference("lecturer").optional(),
     })
 });
 
@@ -58,4 +64,18 @@ const project = defineCollection({
     })
 });
 
-export const collections = {member, album, lecturer, project};
+const schedule = defineCollection({
+    loader: glob({pattern: "**/*.md", base: "./src/contents/schedules"}),
+    schema: ({image}) => z.object({
+        title: z.string(),
+        items: z.array(z.object({
+            startAt: z.string(),
+            endAt: z.string(),
+            subjectCode: reference("subject"),
+            type: z.enum(['theory', 'practice']),
+            room: z.string(),
+        }))
+    })
+})
+
+export const collections = {member, album, lecturer, subject, project, schedule};

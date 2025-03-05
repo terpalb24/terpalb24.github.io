@@ -1,50 +1,38 @@
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table"
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs"
+import type {CollectionEntry} from "astro:content";
+import React, {useMemo} from "react";
 
-// Sample data - replace with actual schedule
-const schedule = {
-    monday: [
-        {time: "08:00 - 09:40", subject: "Software Engineering", lecturer: "Dr. Smith", room: "Lab 101"},
-        {time: "10:00 - 11:40", subject: "Database Systems", lecturer: "Prof. Johnson", room: "Room 203"},
-        {time: "13:00 - 14:40", subject: "Web Development", lecturer: "Ms. Williams", room: "Lab 102"},
-    ],
-    tuesday: [
-        {time: "08:00 - 09:40", subject: "Algorithm Analysis", lecturer: "Dr. Brown", room: "Room 205"},
-        {time: "10:00 - 11:40", subject: "Mobile Development", lecturer: "Mr. Davis", room: "Lab 103"},
-    ],
-    wednesday: [
-        {time: "08:00 - 09:40", subject: "Software Testing", lecturer: "Dr. Miller", room: "Lab 101"},
-        {time: "10:00 - 11:40", subject: "Project Management", lecturer: "Prof. Wilson", room: "Room 204"},
-        {time: "13:00 - 14:40", subject: "Cloud Computing", lecturer: "Ms. Moore", room: "Lab 104"},
-    ],
-    thursday: [
-        {time: "08:00 - 09:40", subject: "Artificial Intelligence", lecturer: "Dr. Taylor", room: "Room 206"},
-        {time: "10:00 - 11:40", subject: "Data Structures", lecturer: "Prof. Anderson", room: "Lab 105"},
-    ],
-    friday: [
-        {time: "08:00 - 09:40", subject: "Computer Networks", lecturer: "Dr. Thomas", room: "Room 207"},
-        {time: "10:00 - 11:40", subject: "Cybersecurity", lecturer: "Mr. Jackson", room: "Lab 106"},
-        {time: "13:00 - 14:40", subject: "Team Project", lecturer: "Prof. White", room: "Lab 107"},
-    ],
+interface Props {
+    items: CollectionEntry<"schedule">[];
+    subjects: CollectionEntry<"subject">[];
+    lecturers: CollectionEntry<"lecturer">[];
 }
 
 
-const ScheduleContent = () => {
-    return (<Tabs defaultValue="monday" className="w-full">
-        <TabsList className="grid w-full grid-cols-5 mb-8">
-            <TabsTrigger value="monday">Monday</TabsTrigger>
-            <TabsTrigger value="tuesday">Tuesday</TabsTrigger>
-            <TabsTrigger value="wednesday">Wednesday</TabsTrigger>
-            <TabsTrigger value="thursday">Thursday</TabsTrigger>
-            <TabsTrigger value="friday">Friday</TabsTrigger>
+const ScheduleContent: React.FC<Props> = ({items, subjects, lecturers}) => {
+    const defaultValue = useMemo(() => {
+        const currentDate = new Date();
+        const dayOfWeek = currentDate.getDay();
+        if (dayOfWeek === 0 || dayOfWeek - 1 > items.length - 1) {
+            return items[0].id;
+        }
+        return items[dayOfWeek - 1].id
+    }, []);
+
+    return (<Tabs defaultValue={defaultValue} className="w-full">
+        <TabsList className="mb-8 mx-auto">
+            {items.map((item) => (
+                <TabsTrigger key={item.id} value={item.id} className="px-4">{item.data.title}</TabsTrigger>
+            ))}
         </TabsList>
 
-        {Object.entries(schedule).map(([day, classes]) => (
-            <TabsContent key={day} value={day}>
-                <Card>
+        {items.map(({id, data}) => (
+            <TabsContent key={id} value={id}>
+                <Card className="shadow-none">
                     <CardHeader>
-                        <CardTitle className="text-xl">{day.charAt(0).toUpperCase() + day.slice(1)} Schedule
+                        <CardTitle className="text-xl">Jadwal Hari {data.title}
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -52,20 +40,31 @@ const ScheduleContent = () => {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>Time</TableHead>
+                                    <TableHead>Code</TableHead>
                                     <TableHead>Subject</TableHead>
                                     <TableHead>Lecturer</TableHead>
                                     <TableHead>Room</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {classes.map((classItem, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell>{classItem.time}</TableCell>
-                                        <TableCell className="font-medium">{classItem.subject}</TableCell>
-                                        <TableCell>{classItem.lecturer}</TableCell>
-                                        <TableCell>{classItem.room}</TableCell>
-                                    </TableRow>
-                                ))}
+                                {data.items.map((item, index) => {
+                                    const subject = subjects.find(it => it.id === item.subjectCode.id);
+                                    let lecturer: CollectionEntry<"lecturer"> | undefined = undefined;
+                                    if (item.type === "theory") {
+                                        lecturer = lecturers.find(it => it.id === subject?.data.theory.id);
+                                    } else {
+                                        lecturer = lecturers.find(it => it.id === subject?.data.practice?.id);
+                                    }
+                                    return (
+                                        <TableRow key={index}>
+                                            <TableCell className="w-36">{item.startAt} - {item.endAt}</TableCell>
+                                            <TableCell className="font-mono w-16">{subject?.data.code}</TableCell>
+                                            <TableCell className="font-medium">{subject?.data.title}</TableCell>
+                                            <TableCell>{lecturer?.data.name}</TableCell>
+                                            <TableCell>{item.room}</TableCell>
+                                        </TableRow>
+                                    )
+                                })}
                             </TableBody>
                         </Table>
                     </CardContent>
