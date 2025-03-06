@@ -22,7 +22,7 @@ const ScheduleContent: React.FC<Props> = ({items, subjects, lecturers}) => {
     }, []);
 
     return (<Tabs defaultValue={defaultValue} className="w-full">
-        <TabsList className="mb-8 mx-auto">
+        <TabsList className="mb-8 mx-auto flex items-center justify-start flex-wrap h-auto space-y-1">
             {items.map((item) => (
                 <TabsTrigger key={item.id} value={item.id} className="px-4">{item.data.title}</TabsTrigger>
             ))}
