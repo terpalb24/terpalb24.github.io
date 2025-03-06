@@ -5,6 +5,8 @@ import {Image} from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
 import {getCollection} from "astro:content";
 import {getEntries} from "astro:content";
+import {Link} from "@/components/link";
+import {LinkIcon} from "lucide-react";
 
 const projects = await getCollection("project");
 const manpros = await getEntries(projects.map(item => item.data.manpro));
@@ -58,6 +60,13 @@ const teams = await getEntries(projects.flatMap(item => item.data.team));
                                                         - {member.data.name}</p>
                                         ) :
                                             <Fragment/>)}
+                                </div>
+                                <div class="mt-4">
+                                    <Link href={data.link} className="w-full variant=" variant="outline"
+                                          target="_blank">
+                                        <LinkIcon/>
+                                        Read More
+                                    </Link>
                                 </div>
                             </CardContent>
                         </Card>

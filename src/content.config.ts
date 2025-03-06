@@ -60,6 +60,7 @@ const project = defineCollection({
         tags: z.array(z.string()),
         manpro: reference("lecturer"),
         cover: image(),
+        link: z.string(),
         team: z.array(reference("member")),
     })
 });
