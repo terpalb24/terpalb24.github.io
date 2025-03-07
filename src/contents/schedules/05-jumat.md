@@ -10,5 +10,5 @@ items:
     endAt: 15:20
     subjectCode: rpl210
     type: practice
-    room: TA 12.4
+    room: TA 12.2
 ---
