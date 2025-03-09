@@ -8,6 +8,9 @@ import {CalendarHeartIcon, MapPin} from "lucide-react";
 import {renderDate} from "../../lib/date";
 
 const albums = await getCollection("album");
+albums.sort(function(a,b){
+  return b.data.date.getTime() - a.data.date.getTime();
+});
 ---
 <Layout title="Albums">
     <div class="container py-12">

@@ -9,6 +9,7 @@ import {Link} from "@/components/link";
 import {LinkIcon} from "lucide-react";
 
 const projects = await getCollection("project");
+projects.sort((a,b)=>a.id.localeCompare(b.id))
 const manpros = await getEntries(projects.map(item => item.data.manpro));
 const teams = await getEntries(projects.flatMap(item => item.data.team));
 ---
