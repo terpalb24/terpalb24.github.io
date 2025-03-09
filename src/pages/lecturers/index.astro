@@ -1,6 +1,5 @@
 ---
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {Mail, Phone, BookOpen} from "lucide-react";
 import Layout from "../../layouts/Layout.astro";
 import {getCollection} from "astro:content";
 import {Image} from "astro:assets";
@@ -8,6 +7,8 @@ import {Badge} from "@/components/ui/badge";
 
 const lecturers = await getCollection("lecturer");
 lecturers.sort((a, b) => (a.data.isGuardianLecturer === b.data.isGuardianLecturer) ? 0 : a.data.isGuardianLecturer ? -1 : 1)
+
+const subjects = await getCollection('subject');
 ---
 <Layout title="Our Lecturers">
     <div class="container py-12">
@@ -19,41 +20,50 @@ lecturers.sort((a, b) => (a.data.isGuardianLecturer === b.data.isGuardianLecture
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {lecturers.map(({data}) => (
-                    <Card className="overflow-hidden shadow-none">
-                        <div class="flex justify-center pt-6">
-                            <div class="relative h-48 w-48 rounded-2xl overflow-hidden">
-                                <Image
-                                        src={data.photo}
-                                        alt={data.name}
-                                        class="object-cover w-full h-full"
-                                />
+            {lecturers.map(({id, data}) => {
+                const currentSubjects = subjects.filter(item => item.data.theory.id === id || item.data.practice?.id === id);
+                return (
+                        <Card className="overflow-hidden shadow-none">
+                            <div class="flex justify-center pt-6">
+                                <div class="relative h-48 w-48 rounded-2xl overflow-hidden">
+                                    <Image
+                                            src={data.photo}
+                                            alt={data.name}
+                                            class="object-cover w-full h-full"
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <CardHeader className="text-center">
-                            <CardTitle className="text-primary text-lg">{data.name}</CardTitle>
-                            <div class="text-center">
-                                <Badge variant="secondary">NIK: {data.nik}</Badge>
-                            </div>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <div>
-                                <p class="text-sm font-medium">Specialization:</p>
-                                <p class="text-sm text-muted-foreground">{data.specialization}</p>
-                            </div>
-                            {data.subjects && data.subjects.length > 0 ?
-                                    <div class="space-y-1">
-                                        <p class="text-sm font-medium">Subjects:</p>
-                                        {data.subjects.map(subject => (
-                                                <div class="text-sm text-muted-foreground flex gap-4"><span
-                                                        class="font-bold">{subject.code}</span><span>{subject.name}
-                                                    ({subject.type})</span></div>
-                                        ))}
-                                    </div> :
-                                    <Fragment/>}
-                        </CardContent>
-                    </Card>
-            ))}
+                            <CardHeader className="text-center">
+                                <CardTitle className="text-primary text-lg">{data.name}</CardTitle>
+                                <div class="text-center">
+                                    <Badge variant="secondary">NIK: {data.nik}</Badge>
+                                </div>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <div>
+                                    <p class="text-sm font-medium">Specialization:</p>
+                                    <p class="text-sm text-muted-foreground mt-1">{data.specialization}</p>
+                                </div>
+                                {currentSubjects && currentSubjects.length > 0 ?
+                                        <div class="space-y-1">
+                                            <p class="text-sm font-medium">Subjects:</p>
+                                            {currentSubjects.map(({data: subject}) => {
+                                                const isTheory = subject.theory.id === id;
+                                                const isPractice = subject.practice?.id === id;
+
+                                                return (
+                                                        <div class="text-sm text-muted-foreground flex gap-4"><span
+                                                                class="font-bold font-mono">{subject.code}</span><span>{subject.title}
+                                                            ({(isTheory && isPractice) ? "Teori & Praktikum" : isTheory ? "Teori" : "Praktikum"})</span>
+                                                        </div>
+                                                )
+                                            })}
+                                        </div> :
+                                        <Fragment/>}
+                            </CardContent>
+                        </Card>
+                );
+            })}
         </div>
     </div>
 </Layout>

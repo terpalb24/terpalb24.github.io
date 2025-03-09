@@ -1,5 +1,5 @@
 import {Button} from "@/components/ui/button";
-import {Sheet, SheetContent, SheetTrigger} from "@/components/ui/sheet";
+import {Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger} from "@/components/ui/sheet";
 import React from "react";
 import {Menu} from "lucide-react";
 
@@ -22,7 +22,10 @@ const NavbarMobile: React.FC<Props> = ({items, pathname}) => {
             </Button>
         </SheetTrigger>
         <SheetContent side="right">
-            <nav className="flex flex-col gap-4 mt-8">
+            <SheetHeader>
+                <SheetTitle>TERPAL B 24</SheetTitle>
+            </SheetHeader>
+            <nav className="flex flex-col gap-4">
                 {items.map((item) => (
                     <a
                         key={item.name}
