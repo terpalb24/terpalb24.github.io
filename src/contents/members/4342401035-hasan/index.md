@@ -8,4 +8,5 @@ socials:
   github: https://github.com/hsnfirdaus
   facebook: https://www.facebook.com/hsnfirdaus
   linkedin: https://www.linkedin.com/in/hsnfirdaus/
+  website: https://hasanfirdaus.com
 ---

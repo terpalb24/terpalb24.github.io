@@ -7,6 +7,7 @@ import Instagram from "../../components/icons/Instagram.astro";
 import GitHub from "../../components/icons/GitHub.astro";
 import LinkedIn from "../../components/icons/LinkedIn.astro";
 import Facebook from "../../components/icons/Facebook.astro";
+import {GlobeIcon} from "lucide-react";
 
 const members = await getCollection("member");
 members.sort((a, b) => a.id.localeCompare(b.id));
@@ -57,6 +58,13 @@ members.sort((a, b) => (a.data.isLeader === b.data.isLeader) ? 0 : a.data.isLead
                                                 <a href={data.socials.linkedin} target="_blank" rel="noreferrer"
                                                    class="text-[#0a66c2]">
                                                     <LinkedIn class="w-6 h-6"/>
+                                                </a>
+                                    ) :
+                                        <Fragment/>}
+                                {data.socials.website ? (
+                                                <a href={data.socials.website} target="_blank" rel="noreferrer"
+                                                   class="text-primary">
+                                                    <GlobeIcon className="w-6 h-6"/>
                                                 </a>
                                     ) :
                                         <Fragment/>}
