@@ -1,7 +1,6 @@
 ---
 nim: 4342401060
 name: Eric Marchelino Hutabarat
-isLeader: true
 quote: figma boy
 photo: ./eric.jpg
 socials:
