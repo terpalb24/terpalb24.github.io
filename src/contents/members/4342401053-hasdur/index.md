@@ -6,5 +6,5 @@ photo: ./hasdur.jpg
 socials:
   instagram: https://www.instagram.com/durr.hs/
   github: https://github.com/abddrhman
-  linkedin: www.linkedin.com/in/hasan-abdurrahman-390602324
+  linkedin: https://www.linkedin.com/in/hasan-abdurrahman-390602324
 ---
