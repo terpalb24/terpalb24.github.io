@@ -30,7 +30,8 @@ members.sort((a, b) => (a.data.isLeader === b.data.isLeader) ? 0 : a.data.isLead
                                    class="object-cover w-full h-full aspect-square"/>
                         </div>
                         <CardHeader className="px-6 pb-6 space-y-2">
-                            <CardTitle className="text-lg text-primary font-bold">{data.name}</CardTitle>
+                            <CardTitle className="text-lg text-primary font-bold truncate"
+                                       title={data.name}>{data.name}</CardTitle>
                             <p class="text-sm text-muted-foreground">{data.quote}</p>
                             <div class="inline-flex flex-wrap items-center gap-2">
                                 {data.socials.facebook ? (
