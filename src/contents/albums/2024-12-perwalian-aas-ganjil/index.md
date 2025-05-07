@@ -15,4 +15,4 @@ contents:
 
 ---
 
-Sesi terakhir mata kuliah Pemrograman Berbasis Web bersama Pak Gilang
+Perwalian AAS semester 1 tahun akademik 2024/2025 di Polibatam bersama wali dosen TRPL 1B Pagi Bu Dr. Metta Santiputri, S.T., M.Sc, Ph.D.

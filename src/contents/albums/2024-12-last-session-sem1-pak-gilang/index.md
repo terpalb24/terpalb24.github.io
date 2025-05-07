@@ -14,4 +14,4 @@ contents:
 
 ---
 
-Satu langkah lebih dekat dengan masa depan! Selamat Dies Natalis Polibatam, terus bersinar dan berinovasi!
+Sesi terakhir mata kuliah Pemrograman Berbasis Web bersama Pak Gilang
