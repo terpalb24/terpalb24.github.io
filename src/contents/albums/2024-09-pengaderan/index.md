@@ -24,5 +24,5 @@ contents:
   - ./IMG-20240914-WA0049.jpg
 ---
 
-Pengaderan Day 3
+Pengaderan Day 3\n
 Salam Informatika, KEEP SPIRIT!!
