@@ -1,6 +1,6 @@
 ---
 title: Buka Bersama 
-date: 2024-03-11
+date: 2025-03-11
 location: Angkringan Onthel Duta Mas
 cover: ./IMG-20250311-WA0044.jpg
 contents:
