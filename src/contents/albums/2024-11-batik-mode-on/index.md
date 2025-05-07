@@ -1,0 +1,34 @@
+---
+title: TRPL B(atik) Pagi
+date: 2024-11-13
+location: Politeknik Negeri Batam
+cover: ./IMG-20241113-WA0036.jpg
+contents:
+  - ./IMG-20241113-WA0014.jpg
+  - ./IMG-20241113-WA0016.jpg
+  - ./IMG-20241113-WA0018.jpg
+  - ./IMG-20241113-WA0020.jpg
+  - ./IMG-20241113-WA0022.jpg
+  - ./IMG-20241113-WA0024.jpg
+  - ./IMG-20241113-WA0026.jpg
+  - ./IMG-20241113-WA0028.jpg
+  - ./IMG-20241113-WA0030.jpg
+  - ./IMG-20241113-WA0032.jpg
+  - ./IMG-20241113-WA0034.jpg
+  - ./IMG-20241113-WA0036.jpg
+  - ./IMG-20241113-WA0038.jpg
+  - ./IMG-20241113-WA0040.jpg
+  - ./IMG-20241113-WA0042.jpg
+  - ./IMG-20241113-WA0044.jpg
+  - ./IMG-20241113-WA0046.jpg
+  - ./IMG-20241113-WA0048.jpg
+  - ./IMG-20241113-WA0050.jpg
+  - ./IMG-20241113-WA0052.jpg
+  - ./IMG-20241113-WA0054.jpg
+  - ./IMG-20241113-WA0056.jpg
+  - ./IMG-20241113-WA0058.jpg
+  - ./IMG-20241113-WA0062.jpg
+
+---
+
+Kondangan mode: ON
