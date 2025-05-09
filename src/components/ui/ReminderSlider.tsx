@@ -24,10 +24,10 @@ const ReminderSlider: FC = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-yellow-800 mb-5">📢 Reminder</h2>
           <div className="mx-auto max-w-3xl text-yellow-900 text-lg md:text-xl space-y-6">
             <p>
-              Jangan lupa hari ini, <strong>Jumat, 9 Mei 2025</strong> ada ujian <strong>ATS PBD</strong> dan <strong>B.INA</strong>!
+              Jangan lupa mengerjakan praktikum ATS PBD dan ATS Statistika <strong>Deadline: Minggu, 10 Mei</strong>
             </p>
             <a
-              href="https://learning-if.polibatam.ac.id/mod/quiz/view.php?id=6503"
+              href="https://learning-if.polibatam.ac.id"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 px-6 rounded-full transition-colors duration-200 shadow-md"
