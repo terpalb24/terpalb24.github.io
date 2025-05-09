@@ -44,7 +44,7 @@ const ReminderSlider: FC = () => {
               <strong>28 April 2025 - 16 Mei 2025 (pukul 23.59 WIB)</strong>
             </p>
             <a
-              href="https://learning-if.polibatam.ac.id/mod/quiz/view.php?id=6503"
+              href="https://sim.polibatam.ac.id/index.php?page=login"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 px-6 rounded-full transition-colors duration-200 shadow-md"
