@@ -11,11 +11,12 @@ import Practical from "../assets/illustration/practical.jpeg";
 import Industry from "../assets/illustration/industry.jpeg";
 import CardSquareImage from "../components/CardSquareImage.astro";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper/modules';
+
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import ReminderSlider from '../components/ui/ReminderSlider.tsx';
+const response = await fetch('https://api.sheetbest.com/sheets/2d51a943-3a12-49ce-b75c-91b86b626177');
+const reminders = await response.json();
 ---
 
 <Layout>
@@ -71,11 +72,7 @@ import ReminderSlider from '../components/ui/ReminderSlider.tsx';
         </section>
 
         {/* Announcement section */}
-        <section class="w-full bg-yellow-50 py-8 mt-6 md:py-12 border-y border-yellow-300">
-            <div class="container px-4 md:px-6">
-                <ReminderSlider client:load />
-            </div>
-        </section>
+        <ReminderSlider reminders={reminders} client:load/>
 
         
         {/* Features section */}
