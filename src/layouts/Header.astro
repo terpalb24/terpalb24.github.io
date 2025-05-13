@@ -15,10 +15,14 @@ const navigation = [
 const pathname = Astro.url.pathname;
 ---
 
-<header data-header class="fixed inset-x-0 top-0 z-50">
+<header
+  transition:persist
+  transition:name="fixed-header"
+  class="fixed inset-x-0 top-0 z-50"
+>
   <span
     data-header-bg
-    class="absolute w-full bottom-16 lg:bottom-20 lg:h-20 h-16 inset-x-0 bg-bg lg:bg-bg/60 lg:backdrop-blur-2xl -z-1 ease-in-out transition-all duration-300 delay-0"
+    class="absolute w-full bottom-16 lg:bottom-20 lg:h-20 h-16 inset-x-0 bg-bg lg:bg-bg/90 -z-1 ease-in-out transition-all duration-300 delay-0"
   ></span>
   <div class="container flex h-16 lg:h-20 items-center justify-between">
     <a href="/" class="flex items-center gap-2">
@@ -65,70 +69,85 @@ const pathname = Astro.url.pathname;
   </div>
 </header>
 <script>
-  document.addEventListener("astro:page-load", () => {
-    const headerBg = document.querySelector("[data-header-bg]")! as HTMLElement;
-    const navMenu = document.querySelector("[data-nav-menu]")! as HTMLElement;
-    const toggleMenu = document.querySelector(
-      "[data-toggle-menu]",
-    )! as HTMLButtonElement;
+  const headerBg = document.querySelector("[data-header-bg]")! as HTMLElement;
+  const navMenu = document.querySelector("[data-nav-menu]")! as HTMLElement;
+  const toggleMenu = document.querySelector(
+    "[data-toggle-menu]",
+  )! as HTMLButtonElement;
 
-    const menuIcon = document.querySelector("[data-menu-icon]")! as SVGElement;
-    const closeIcon = document.querySelector(
-      "[data-close-icon]",
-    )! as SVGElement;
+  const menuIcon = document.querySelector("[data-menu-icon]")! as SVGElement;
+  const closeIcon = document.querySelector("[data-close-icon]")! as SVGElement;
 
-    const isScrolled = () => window.scrollY > headerBg.clientHeight - 16;
+  const isScrolled = () => window.scrollY > headerBg.clientHeight - 16;
 
-    const isOpen = () => navMenu.classList.contains("right-0");
+  const isOpen = () => navMenu.classList.contains("right-0");
 
-    const updateHeaderBg = () => {
-      if (isScrolled() || isOpen()) {
-        headerBg.classList.remove("bottom-16", "lg:bottom-20", "delay-500");
-        headerBg.classList.add("bottom-0", "lg:bottom-0", "delay-0");
+  const updateHeaderBg = () => {
+    if (isScrolled() || isOpen()) {
+      headerBg.classList.remove("bottom-16", "lg:bottom-20", "delay-500");
+      headerBg.classList.add("bottom-0", "lg:bottom-0", "delay-0");
+    } else {
+      headerBg.classList.remove("bottom-0", "lg:bottom-0", "delay-0");
+      headerBg.classList.add("bottom-16", "lg:bottom-20", "delay-500");
+    }
+  };
+
+  window.addEventListener("scroll", updateHeaderBg);
+
+  const showNavMenu = () => {
+    navMenu.classList.remove("-right-full", "delay-0");
+    navMenu.classList.add("right-0", "delay-300");
+
+    menuIcon.classList.remove("opacity-100", "rotate-0");
+    menuIcon.classList.add("opacity-0", "rotate-180");
+    closeIcon.classList.remove("opacity-0", "-rotate-180");
+    closeIcon.classList.add("opacity-100", "rotate-0");
+
+    updateHeaderBg();
+  };
+  const hideNavMenu = () => {
+    navMenu.classList.remove("right-0", "delay-300");
+    navMenu.classList.add("-right-full", "delay-0");
+
+    menuIcon.classList.remove("opacity-0", "rotate-180");
+    menuIcon.classList.add("opacity-100", "rotate-0");
+    closeIcon.classList.remove("opacity-100", "rotate-0");
+    closeIcon.classList.add("opacity-0", "-rotate-180");
+
+    updateHeaderBg();
+  };
+
+  const toggleMenuHandler = () => {
+    if (isOpen()) {
+      hideNavMenu();
+    } else {
+      showNavMenu();
+    }
+  };
+
+  toggleMenu.addEventListener("click", toggleMenuHandler);
+  document.addEventListener("astro:before-preparation", () => {
+    if (isOpen()) {
+      hideNavMenu();
+    }
+  });
+
+  const updateActiveMenu = () => {
+    const items = navMenu.querySelectorAll("a");
+    items.forEach((item) => {
+      const href = item.getAttribute("href")!;
+      if (
+        href === "/"
+          ? "/" === window.location.pathname
+          : window.location.pathname.startsWith(href)
+      ) {
+        item.classList.remove("text-white");
+        item.classList.add("text-primary");
       } else {
-        headerBg.classList.remove("bottom-0", "lg:bottom-0", "delay-0");
-        headerBg.classList.add("bottom-16", "lg:bottom-20", "delay-500");
-      }
-    };
-
-    window.addEventListener("scroll", updateHeaderBg);
-
-    const showNavMenu = () => {
-      navMenu.classList.remove("-right-full", "delay-0");
-      navMenu.classList.add("right-0", "delay-300");
-
-      menuIcon.classList.remove("opacity-100", "rotate-0");
-      menuIcon.classList.add("opacity-0", "rotate-180");
-      closeIcon.classList.remove("opacity-0", "-rotate-180");
-      closeIcon.classList.add("opacity-100", "rotate-0");
-
-      updateHeaderBg();
-    };
-    const hideNavMenu = () => {
-      navMenu.classList.remove("right-0", "delay-300");
-      navMenu.classList.add("-right-full", "delay-0");
-
-      menuIcon.classList.remove("opacity-0", "rotate-180");
-      menuIcon.classList.add("opacity-100", "rotate-0");
-      closeIcon.classList.remove("opacity-100", "rotate-0");
-      closeIcon.classList.add("opacity-0", "-rotate-180");
-
-      updateHeaderBg();
-    };
-
-    const toggleMenuHandler = () => {
-      if (isOpen()) {
-        hideNavMenu();
-      } else {
-        showNavMenu();
-      }
-    };
-
-    toggleMenu.addEventListener("click", toggleMenuHandler);
-    document.addEventListener("astro:before-preparation", () => {
-      if (isOpen()) {
-        hideNavMenu();
+        item.classList.remove("text-primary");
+        item.classList.add("text-white");
       }
     });
-  });
+  };
+  document.addEventListener("astro:after-swap", updateActiveMenu);
 </script>

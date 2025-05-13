@@ -55,7 +55,9 @@ import Hero from "../assets/hero.jpg";
       rotationX += (targetX - rotationX) * 0.1;
       rotationY += (targetY - rotationY) * 0.1;
 
-      el.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+      if (el) {
+        el.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+      }
 
       requestAnimationFrame(animate);
     };
