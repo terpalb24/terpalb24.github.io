@@ -46,6 +46,10 @@
   .ripple.ripple-white .ripple-bg2 {
     @apply border-primary bg-white;
   }
+
+  #smooth-content {
+    will-change: transform;
+  }
 }
 
 @utility container {
