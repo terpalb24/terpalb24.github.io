@@ -6,7 +6,7 @@
 >
   <div
     data-pointer-glow
-    class="absolute bg-radial -translate-1/2 from-secondary/50 to-transparent h-[80vh] rounded-full blur-3xl aspect-square"
+    class="absolute bg-radial pointer-events-none -translate-1/2 from-secondary/50 to-transparent h-[80vh] rounded-full blur-3xl aspect-square"
   >
   </div>
 </div>
@@ -14,7 +14,7 @@
   let currentMouse = { x: 0, y: 0 };
   let targetMouse = { x: 0, y: 0 };
 
-  window.addEventListener("pointermove", (e) => {
+  window.addEventListener("mousemove", (e) => {
     targetMouse.x = e.clientX;
     targetMouse.y = e.clientY;
   });
