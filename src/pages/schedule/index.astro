@@ -7,6 +7,10 @@ import Button from "../../components/Button.astro";
 import { Image } from "astro:assets";
 
 const schedules = await getCollection("schedule");
+schedules.sort((a, b) => {
+    return a.id.localeCompare(b.id);
+});
+
 const subjects = await getEntries(
     schedules.flatMap((item) =>
         item.data.items.flatMap((child) => child.subjectCode),

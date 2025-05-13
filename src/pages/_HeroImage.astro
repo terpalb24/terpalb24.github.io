@@ -24,7 +24,6 @@ import Hero from "../assets/hero.jpg";
   </div>
 </div>
 <script>
-  import * as THREE from "three";
   const el = document.querySelector("[data-rotated]")! as HTMLElement;
   let windowWidth = window.innerWidth;
   let windowHeight = window.innerHeight;
@@ -34,18 +33,21 @@ import Hero from "../assets/hero.jpg";
     windowHeight = window.innerHeight;
   });
 
-  let targetMouse = new THREE.Vector2();
-  let currentMouse = new THREE.Vector2();
+  let currentMouse = { x: 0, y: 0 };
+  let targetMouse = { x: 0, y: 0 };
 
-  window.addEventListener("mousemove", (e) => {
-    targetMouse.set(e.clientX, e.clientY);
+  window.addEventListener("pointermove", (e) => {
+    targetMouse.x = e.clientX;
+    targetMouse.y = e.clientY;
   });
 
   let rotationX = 0;
   let rotationY = 0;
 
   const animate = () => {
-    currentMouse.lerp(targetMouse, 0.03);
+    currentMouse.x += (targetMouse.x - currentMouse.x) * 0.03;
+    currentMouse.y += (targetMouse.y - currentMouse.y) * 0.03;
+
     const targetX = (currentMouse.y - windowHeight / 2) / 30;
     const targetY = -(currentMouse.x - windowWidth / 2) / 30;
 

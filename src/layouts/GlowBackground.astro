@@ -4,78 +4,31 @@
   transition:name="glow-background"
   class="fixed inset-0 -z-1 mix-blend-screen"
 >
+  <div
+    data-pointer-glow
+    class="absolute bg-radial -translate-1/2 from-secondary/50 to-transparent h-[80vh] rounded-full blur-3xl aspect-square"
+  >
+  </div>
 </div>
 <script>
-  import * as THREE from "three";
+  let currentMouse = { x: 0, y: 0 };
+  let targetMouse = { x: 0, y: 0 };
 
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x071527);
-
-  let aspect = window.innerWidth / window.innerHeight;
-  let frustumHeight = 2;
-  let frustumWidth = frustumHeight * aspect;
-
-  const camera = new THREE.OrthographicCamera(
-    -frustumWidth / 2,
-    frustumWidth / 2,
-    frustumHeight / 2,
-    -frustumHeight / 2
-  );
-
-  const geometry = new THREE.PlaneGeometry(frustumWidth, frustumHeight);
-  const material = new THREE.MeshStandardMaterial({
-    color: 0xffffff,
-  });
-  const plane = new THREE.Mesh(geometry, material);
-  plane.position.z = -1;
-  scene.add(plane);
-
-  const light = new THREE.PointLight(0x00bcff, 1, 2, 10);
-  light.power = 10;
-  scene.add(light);
-
-  const renderer = new THREE.WebGLRenderer({
-    antialias: true,
-  });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(window.devicePixelRatio);
-  document.querySelector("[data-background]")!.appendChild(renderer.domElement);
-
-  let targetMouse = new THREE.Vector2();
-  let currentMouse = new THREE.Vector2();
-
-  window.addEventListener("mousemove", (e) => {
-    targetMouse.set(
-      (e.clientX / window.innerWidth) * 2 - 1,
-      -(e.clientY / window.innerHeight) * 2 + 1
-    );
+  window.addEventListener("pointermove", (e) => {
+    targetMouse.x = e.clientX;
+    targetMouse.y = e.clientY;
   });
 
-  window.addEventListener("resize", () => {
-    aspect = window.innerWidth / window.innerHeight;
-    frustumWidth = frustumHeight * aspect;
+  const animate = () => {
+    currentMouse.x += (targetMouse.x - currentMouse.x) * 0.03;
+    currentMouse.y += (targetMouse.y - currentMouse.y) * 0.03;
 
-    camera.left = -frustumWidth / 2;
-    camera.right = frustumWidth / 2;
-    camera.top = frustumHeight / 2;
-    camera.bottom = -frustumHeight / 2;
-    camera.updateProjectionMatrix();
+    const el = document.querySelector("[data-pointer-glow]")! as HTMLElement;
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
+    el.style.transform = `translate3d(${currentMouse.x}px, ${currentMouse.y}px, 0)`;
 
-    plane.geometry.dispose();
-    plane.geometry = new THREE.PlaneGeometry(frustumWidth, frustumHeight);
-    plane.position.set(0, 0, -1);
-  });
-
-  function animate() {
     requestAnimationFrame(animate);
+  };
 
-    currentMouse.lerp(targetMouse, 0.03);
-    light.position.setX((currentMouse.x * frustumWidth) / 2);
-    light.position.setY((currentMouse.y * frustumHeight) / 2);
-    renderer.render(scene, camera);
-  }
   animate();
 </script>
