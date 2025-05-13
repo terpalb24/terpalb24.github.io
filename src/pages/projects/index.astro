@@ -1,78 +1,127 @@
 ---
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {Badge} from "@/components/ui/badge";
-import {Image} from "astro:assets";
+import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
-import {getCollection} from "astro:content";
-import {getEntries} from "astro:content";
-import {Link} from "@/components/link";
-import {LinkIcon} from "lucide-react";
+import { getCollection } from "astro:content";
+import { getEntries } from "astro:content";
+import HeaderSection from "../../components/HeaderSection.astro";
+import { ExternalLinkIcon } from "@lucide/astro";
+import Button from "../../components/Button.astro";
+import { calcSpeed, getSemester } from "../../lib/utils";
+import ImageHoverable from "../../components/ImageHoverable.astro";
 
 const projects = await getCollection("project");
-projects.sort((a,b)=>a.id.localeCompare(b.id))
-const manpros = await getEntries(projects.map(item => item.data.manpro));
-const teams = await getEntries(projects.flatMap(item => item.data.team));
----
-<Layout title="Our Projects">
-    <div class="container py-12">
-        <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary">Our Projects</h1>
-            <p class="mx-auto max-w-[700px] text-muted-foreground">
-                Explore the innovative projects developed by TERPAL B 24 students
-            </p>
-        </div>
+projects.sort((a, b) => a.id.localeCompare(b.id));
+const manpros = await getEntries(projects.map((item) => item.data.manpro));
+const teams = await getEntries(projects.flatMap((item) => item.data.team));
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map(({data}) => {
-                const manpro = manpros.find(item => item.id === data.manpro.id);
-                const members = data.team.map(item => {
-                    return teams.find(team => team.id === item.id);
-                })
-                return (
-                        <Card className="overflow-hidden flex flex-col shadow-none pt-0">
-                            <div class="aspect-video relative">
-                                <Image
-                                        src={data.cover}
-                                        alt={data.title}
-                                        class="object-cover w-full aspect-video"
-                                />
-                            </div>
-                            <CardHeader>
-                                <CardTitle>{data.code}{" : "}{data.name}</CardTitle>
-                                <div class="flex flex-wrap gap-2 mt-2">
+const semesters = projects.map(({ data }) => {
+    return getSemester(data.code);
+});
+const uniqueSemesters = [...new Set(semesters)];
+const sortedSemesters = uniqueSemesters.sort((a, b) => a - b);
+---
+
+<Layout title="Our Projects">
+    <HeaderSection
+        title="Our Projects"
+        subtitle="Explore the innovative projects developed by TERPAL B 24 students"
+    >
+        <div class="mt-8 flex gap-4 items-center justify-center flex-wrap">
+            <Button data-smt-btn="ALL" color="primary" href={`#`}
+                >All Semesters</Button
+            >
+            {
+                sortedSemesters.map((smt) => (
+                    <Button data-smt-btn={smt} color="white" href={`#`}>
+                        Semester {smt}
+                    </Button>
+                ))
+            }
+        </div>
+    </HeaderSection>
+    <div class="container py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
+            {
+                projects.map(({ data }, idx) => {
+                    const manpro = manpros.find(
+                        (item) => item.id === data.manpro.id,
+                    );
+                    const members = data.team.map((item) => {
+                        return teams.find((team) => team.id === item.id);
+                    });
+                    const semester = getSemester(data.code);
+                    return (
+                        <div
+                            data-speed={calcSpeed(idx, 3)}
+                            data-item-smt={semester}
+                        >
+                            <ImageHoverable
+                                src={data.cover}
+                                alt={data.title}
+                                class="aspect-video"
+                                hideOverlay
+                            >
+                                <div class="flex absolute top-4 left-4 flex-wrap gap-2">
+                                    <span class="bg-secondary text-bg uppercase font-bold text-sm px-2 py-1 rounded-md">
+                                        {data.code}
+                                    </span>
                                     {data.tags.map((tag) => (
-                                            <Badge variant="secondary">
-                                                {tag}
-                                            </Badge>
+                                        <span class="bg-primary text-bg uppercase font-bold text-sm px-2 py-1 rounded-md">
+                                            {tag}
+                                        </span>
                                     ))}
                                 </div>
-                            </CardHeader>
-                            <CardContent className="flex-grow">
-                                <p class="text-muted-foreground">{data.title}</p>
-                                <div class="mt-4">
-                                    <p class="font-medium">Project Manager:</p>
-                                    <p class="text-sm text-muted-foreground">{manpro?.data.nik}
-                                        - {manpro?.data.name}</p>
+                            </ImageHoverable>
+                            <div class="mt-6">
+                                <div class="flex gap-2 flex-wrap">
+                                    <Image
+                                        src={manpro!.data.photo}
+                                        alt={manpro!.data.name}
+                                        title={manpro!.data.name}
+                                        class="w-14 h-14 object-cover object-center rounded-full"
+                                    />
+                                    {members.map((member) => (
+                                        <Image
+                                            src={member!.data.photo}
+                                            alt={member!.data.name}
+                                            title={member!.data.name}
+                                            class="w-14 h-14 object-cover object-center rounded-full"
+                                        />
+                                    ))}
                                 </div>
-                                <div class="mt-4 space-y-1">
-                                    <p class="font-medium">Team Members:</p>
-                                    {members.map((member) => member ? (
-                                                    <p class="text-sm text-muted-foreground">{member.data.nim}
-                                                        - {member.data.name}</p>
-                                        ) :
-                                            <Fragment/>)}
-                                </div>
-                                <div class="mt-4">
-                                    <Link href={data.link} className="w-full variant=" variant="outline"
-                                          target="_blank">
-                                        <LinkIcon/>
-                                        Read More
-                                    </Link>
-                                </div>
-                            </CardContent>
-                        </Card>
-                );
-            })}
+                                <h3 class="mt-4 font-black text-4xl text-primary">
+                                    {data.name}
+                                </h3>
+                                <h2 class="text-lg mt-4">{data.title}</h2>
+                                {data.link && (
+                                    <div class="mt-4">
+                                        <a
+                                            href={data.link}
+                                            class="inline-flex font-bold gap-2 items-center text-primary"
+                                            target="_blank"
+                                        >
+                                            <ExternalLinkIcon />
+                                            <span>Read More</span>
+                                        </a>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    );
+                })
+            }
         </div>
     </div>
 </Layout>
+<script>
+    import { Filter } from "../../scripts/filter";
+
+    document.addEventListener("astro:page-load", () => {
+        new Filter({
+            filterSelector: "[data-smt-btn]",
+            filterAttribute: "data-smt-btn",
+            itemSelector: "[data-item-smt]",
+            itemAttribute: "data-item-smt",
+        });
+    });
+</script>

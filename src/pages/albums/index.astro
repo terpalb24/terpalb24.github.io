@@ -1,51 +1,76 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import {Card, CardHeader, CardTitle} from "../../components/ui/card";
-import {getCollection} from "astro:content";
-import {Image} from "astro:assets";
-import {Badge} from "@/components/ui/badge";
-import {CalendarHeartIcon, MapPin} from "lucide-react";
-import {renderDate} from "../../lib/date";
+import { getCollection } from "astro:content";
+import { renderDate } from "../../lib/date";
+import HeaderSection from "../../components/HeaderSection.astro";
+import Button from "../../components/Button.astro";
+import ImageHoverable from "../../components/ImageHoverable.astro";
+import { calcSpeed } from "../../lib/utils";
 
 const albums = await getCollection("album");
-albums.sort(function(a,b){
+albums.sort(function (a, b) {
   return b.data.date.getTime() - a.data.date.getTime();
 });
----
-<Layout title="Albums">
-    <div class="container py-12">
-        <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary">Class Albums</h1>
-            <p class="mx-auto max-w-[700px] text-muted-foreground">
-                Photos of memories from our class activities
-            </p>
-        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {albums.map(({id, data}) => (
-                    <a href={`/albums/${id}`} class="group">
-                        <Card className="overflow-hidden p-0 shadow-none group-hover:bg-muted">
-                            <div class="aspect-video overflow-hidden">
-                                <Image
-                                        src={data.cover}
-                                        alt={`Foto ${data.title}`}
-                                        class="object-cover w-full h-full group-hover:scale-125 group-hover:rotate-2 transition-transform"
-                                />
-                            </div>
-                            <CardHeader className="px-6 pb-6 space-y-2">
-                                <CardTitle className="text-lg text-primary">{data.title}</CardTitle>
-                                <div class="flex items-center gap-2 flex-wrap">
-                                    <Badge variant="secondary">
-                                        <MapPin/>
-                                        {data.location}</Badge>
-                                    <Badge variant="secondary">
-                                        <CalendarHeartIcon/>
-                                        {renderDate(data.date)}</Badge>
-                                </div>
-                            </CardHeader>
-                        </Card>
-                    </a>
-            ))}
-        </div>
+const years = albums.map((album) => album.data.date.getFullYear());
+const uniqueYears = [...new Set(years)];
+---
+
+<Layout title="Albums">
+  <HeaderSection
+    title="Class Albums"
+    subtitle="Photos of memories from our class activities"
+  >
+    <div class="mt-8 flex gap-4 items-center justify-center flex-wrap">
+      <Button data-year-btn="ALL" color="primary" href={`#`}>All Years</Button>
+      {
+        uniqueYears.map((year) => (
+          <Button data-year-btn={year} color="white" href={`#`}>
+            {year}
+          </Button>
+        ))
+      }
     </div>
+  </HeaderSection>
+  <div class="container py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
+      {
+        albums.map(({ id, data }, idx) => (
+          <a
+            data-speed={calcSpeed(idx, 3)}
+            data-item-year={data.date.getFullYear()}
+            href={`/albums/${id}`}
+          >
+            <ImageHoverable
+              src={data.cover}
+              alt={`Foto ${data.title}`}
+              class="aspect-video"
+            />
+            <div class="pt-6 space-y-2">
+              <h3 class="text-4xl font-black">{data.title}</h3>
+              <div
+                class={`flex items-center font-bold uppercase text-sm mt-2 gap-2 flex-wrap ${idx % 2 === 0 ? "text-primary" : "text-secondary"}`}
+              >
+                <span>{data.location}</span>
+                <span>•</span>
+                <span>{renderDate(data.date)}</span>
+              </div>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
 </Layout>
+<script>
+  import { Filter } from "../../scripts/filter";
+
+  document.addEventListener("astro:page-load", () => {
+    new Filter({
+      filterSelector: "[data-year-btn]",
+      filterAttribute: "data-year-btn",
+      itemSelector: "[data-item-year]",
+      itemAttribute: "data-item-year",
+    });
+  });
+</script>

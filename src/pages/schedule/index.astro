@@ -1,21 +1,113 @@
 ---
-import type {ReferenceDataEntry} from "astro:content";
-import ScheduleContent from "../../components/schedule-content";
+import type { ReferenceDataEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import {getCollection, getEntries} from "astro:content";
+import { getCollection, getEntries } from "astro:content";
+import HeaderSection from "../../components/HeaderSection.astro";
+import Button from "../../components/Button.astro";
+import { Image } from "astro:assets";
 
 const schedules = await getCollection("schedule");
-const subjects = await getEntries(schedules.flatMap(item => item.data.items.flatMap(child => child.subjectCode)));
-const entries = [...subjects.map(item => item.data.theory), ...subjects.map(item => item.data.practice)].filter(Boolean) as ReferenceDataEntry<"lecturer", string>[];
-const lecturers = await getEntries(entries)
+const subjects = await getEntries(
+    schedules.flatMap((item) =>
+        item.data.items.flatMap((child) => child.subjectCode),
+    ),
+);
+const entries = [
+    ...subjects.map((item) => item.data.theory),
+    ...subjects.map((item) => item.data.practice),
+].filter(Boolean) as ReferenceDataEntry<"lecturer", string>[];
+const lecturers = await getEntries(entries);
 ---
-<Layout title="Schedule">
-    <div class="container py-12">
-        <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary">Class Schedule</h1>
-            <p class="mx-auto max-w-[700px] text-muted-foreground">Weekly timetable for TERPAL B 24</p>
-        </div>
 
-        <ScheduleContent items={schedules} subjects={subjects} lecturers={lecturers} client:load/>
+<Layout title="Schedule">
+    <HeaderSection
+        title="Class Schedule"
+        subtitle="Weekly timetable for TERPAL B 24"
+    >
+        <div class="mt-8 flex gap-4 items-center justify-center flex-wrap">
+            {
+                schedules.map((item) => (
+                    <Button data-id-btn={item.id} color="white" href={`#`}>
+                        {item.data.title}
+                    </Button>
+                ))
+            }
+        </div>
+    </HeaderSection>
+    <div class="container py-4 flex flex-col gap-24">
+        {
+            schedules.map(({ id, data }) => (
+                <div data-item-id={id} class="hidden">
+                    <div class="flex flex-col gap-12">
+                        {data.items.map((item, index) => {
+                            const subject = subjects.find(
+                                (it) => it.id === item.subjectCode.id,
+                            );
+                            const lecturerCode =
+                                item.type === "theory"
+                                    ? subject?.data.theory.id
+                                    : subject?.data.practice?.id;
+                            const lecturer = lecturers.find(
+                                (it) => it.id === lecturerCode,
+                            );
+                            return (
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
+                                    <div class="md:text-right">
+                                        <div class="font-bold mt-2">
+                                            {item.room}
+                                        </div>
+                                        <div
+                                            class={`text-2xl font-bold ${index % 2 === 0 ? "text-primary" : "text-secondary"}`}
+                                        >
+                                            {item.startAt} - {item.endAt}
+                                        </div>
+                                        <div class="text-3xl leading-normal lg:leading-normal lg:text-4xl font-bold mt-2">
+                                            {subject?.data.title}
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-4 mt-4">
+                                        <Image
+                                            src={lecturer!.data.photo}
+                                            alt={lecturer!.data.name}
+                                            class="w-12 object-cover object-center h-12 rounded-full"
+                                        />
+                                        <div class="flex flex-col gap-1">
+                                            <div class="text-lg font-bold">
+                                                {lecturer?.data.name}
+                                            </div>
+                                            <div class="text-sm">
+                                                {subject?.data.code}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            ))
+        }
     </div>
 </Layout>
+<script>
+    import { Filter } from "../../scripts/filter";
+
+    document.addEventListener("astro:page-load", () => {
+        const filter = new Filter({
+            filterSelector: "[data-id-btn]",
+            filterAttribute: "data-id-btn",
+            itemSelector: "[data-item-id]",
+            itemAttribute: "data-item-id",
+        });
+        const getCurrentId = () => {
+            const items = document.querySelectorAll("[data-item-id]");
+            const currentDate = new Date();
+            const dayOfWeek = currentDate.getDay();
+            if (dayOfWeek === 0 || dayOfWeek - 1 > items.length - 1) {
+                return items[0].getAttribute("data-item-id");
+            }
+            return items[dayOfWeek - 1].getAttribute("data-item-id");
+        };
+        filter.setFilter(getCurrentId()!);
+    });
+</script>

@@ -1,33 +1,62 @@
 ---
-import '@fontsource-variable/inter';
 import "../styles/global.css";
+import { ClientRouter, slide } from "astro:transitions";
+import GlowBackground from "./GlowBackground.astro";
 import Header from "./Header.astro";
 import Footer from "./Footer.astro";
-import {ClientRouter} from 'astro:transitions';
 
 interface Props {
-    title?: string;
+  title?: string;
 }
-const {title} = Astro.props;
+const { title } = Astro.props;
 const fullTitle = title ? title + " - Terpal B24" : "Terpal B24";
 ---
+
 <!doctype html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width"/>
-    <link rel="icon" type="image/svg+xml" href="/favicon.png"/>
-    <meta name="generator" content={Astro.generator}/>
+<html lang="id" class="dark overflow-x-hidden">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
     <title>{fullTitle}</title>
-    <ClientRouter/>
-</head>
-<body>
-<div class="flex min-h-screen flex-col">
-    <Header/>
-    <main class="flex-1 pt-20">
-        <slot/>
-    </main>
-    <Footer/>
-</div>
-</body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <ClientRouter />
+  </head>
+  <body class="overflow-x-hidden">
+    <GlowBackground />
+    <Header />
+    <div id="smooth-wrapper">
+      <div id="smooth-content">
+        <main
+          transition:animate={slide({
+            duration: 1000,
+          })}
+        >
+          <slot />
+        </main>
+        <Footer />
+      </div>
+    </div>
+  </body>
 </html>
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import { ScrollSmoother } from "gsap/ScrollSmoother";
+  import { SplitText } from "gsap/SplitText";
+
+  document.addEventListener("astro:page-load", () => {
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
+
+    ScrollSmoother.create({
+      smooth: 1.2,
+      effects: true,
+    });
+  });
+</script>

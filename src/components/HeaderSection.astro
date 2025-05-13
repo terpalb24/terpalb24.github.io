@@ -1,0 +1,52 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+}
+const { title, subtitle } = Astro.props;
+---
+
+<header class="pb-12 md:pb-24 pt-24 md:pt-48 text-center container">
+  <h1
+    class="text-5xl page-title leading-normal md:leading-normal xl:leading-normal font-black xl:text-6xl text-primary"
+  >
+    {title}
+  </h1>
+  {
+    subtitle && (
+      <p class="mx-auto page-subtitle mt-4 max-w-[700px] md:text-md xl:text-lg font-semibold">
+        {subtitle}
+      </p>
+    )
+  }
+  <slot />
+</header>
+<script>
+  import { gsap } from "gsap";
+  import { SplitText } from "gsap/SplitText";
+
+  document.addEventListener("astro:page-load", () => {
+    let split = SplitText.create(".page-title", { type: "chars, words" });
+
+    gsap.from(split.chars, {
+      duration: 0.5,
+      y: 50,
+      autoAlpha: 0,
+      stagger: 0.05,
+      delay: 0.5,
+    });
+
+    if (document.querySelector(".page-subtitle")) {
+      let split2 = SplitText.create(".page-subtitle", { type: "chars, words" });
+
+      gsap.from(split2.chars, {
+        duration: 0.7,
+        x: 150,
+        autoAlpha: 0,
+        delay: 0.5,
+        ease: "power4",
+        stagger: 0.04,
+      });
+    }
+  });
+</script>

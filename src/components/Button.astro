@@ -1,0 +1,20 @@
+---
+interface Props {
+  href: string;
+  color?: "primary" | "white";
+}
+
+const { href, color = "primary", ...rest } = Astro.props;
+---
+
+<a
+  href={href}
+  class={`ripple inline-flex h-12 items-center rounded-full px-6 font-semibold ${color === "white" ? "ripple-white" : "ripple-primary"}`}
+  {...rest}
+>
+  <span class="ripple-bg"></span>
+  <span class="ripple-bg2"></span>
+  <span class="ripple-fg inline-flex items-center gap-2">
+    <slot />
+  </span>
+</a>

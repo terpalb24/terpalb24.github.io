@@ -1,0 +1,66 @@
+---
+import Button from "../components/Button.astro";
+import { ArrowRight } from "@lucide/astro";
+import HeroImage from "./_HeroImage.astro";
+---
+
+<section class="h-screen">
+  <div class="relative container h-full">
+    <HeroImage />
+    <div
+      class="flex h-full flex-col items-center justify-center gap-6 text-center"
+    >
+      <h1
+        class="hero-heading flex flex-col items-center justify-center gap-4 font-black"
+      >
+        <span class="text-4xl lg:text-5xl text-shadow-lg text-shadow-bg"
+          >Welcome to</span
+        >
+        <span
+          class="text-primary text-7xl lg:text-8xl text-shadow-lg text-shadow-bg"
+          >Terpal B 24</span
+        >
+      </h1>
+      <h2 class="mx-auto max-w-[700px] md:text-xl">
+        Software Engineering Class Part of{" "}
+        <a
+          href="https://if.polibatam.ac.id/teknologi-rekayasa-perangkat-lunak/"
+          class="transition-opacity duration-200 hover:opacity-75"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <strong>Prodi TRPL Polibatam</strong>
+        </a>
+      </h2>
+      <div class="mt-6 flex items-center justify-center gap-4">
+        <Button href="/members">
+          Our Members
+          <ArrowRight class="h-4 w-4" />
+        </Button>
+        <Button color="white" href="/projects">
+          Our Projects
+          <ArrowRight class="h-4 w-4" />
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  import { gsap } from "gsap";
+  import { SplitText } from "gsap/SplitText";
+
+  document.addEventListener("astro:page-load", () => {
+    SplitText.create(".hero-heading", {
+      type: "words, chars",
+      onSplit(splitText) {
+        gsap.from(splitText.chars, {
+          duration: 0.5,
+          y: 20,
+          autoAlpha: 0,
+          stagger: 0.05,
+          delay: 0.5,
+        });
+      },
+    });
+  });
+</script>

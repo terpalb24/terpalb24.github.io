@@ -1,78 +1,74 @@
 ---
-import {Card, CardHeader, CardTitle} from "@/components/ui/card"
 import Layout from "../../layouts/Layout.astro";
-import {getCollection} from "astro:content";
-import {Image} from 'astro:assets';
-import Instagram from "../../components/icons/Instagram.astro";
-import GitHub from "../../components/icons/GitHub.astro";
-import LinkedIn from "../../components/icons/LinkedIn.astro";
-import Facebook from "../../components/icons/Facebook.astro";
-import {GlobeIcon} from "lucide-react";
+import { getCollection } from "astro:content";
+import SocialLink from "../../components/SocialLink.astro";
+import HeaderSection from "../../components/HeaderSection.astro";
+import ImageHoverable from "../../components/ImageHoverable.astro";
+import { calcSpeed } from "../../lib/utils";
 
 const members = await getCollection("member");
 members.sort((a, b) => a.id.localeCompare(b.id));
-members.sort((a, b) => (a.data.isLeader === b.data.isLeader) ? 0 : a.data.isLeader ? -1 : 1)
+members.sort((a, b) =>
+  a.data.isLeader === b.data.isLeader ? 0 : a.data.isLeader ? -1 : 1,
+);
 ---
-<Layout title="Our Class Member">
-    <div class="container py-12">
-        <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary">Our Class Members</h1>
-            <p class="mx-auto max-w-[700px] text-muted-foreground md:text-md">
-                Meet the talented students of TERPAL B 24
-            </p>
-        </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {members.map(({data}) => (
-                    <Card className="overflow-hidden shadow-none p-0">
-                        <div class="aspect-square relative">
-                            <Image src={data.photo} alt={data.name}
-                                   class="object-cover w-full h-full aspect-square"/>
-                        </div>
-                        <CardHeader className="px-6 pb-6 space-y-2">
-                            <CardTitle className="text-lg text-primary font-bold truncate"
-                                       title={data.name}>{data.name}</CardTitle>
-                            <p class="text-sm text-muted-foreground">{data.quote}</p>
-                            <div class="inline-flex flex-wrap items-center gap-2">
-                                {data.socials.facebook ? (
-                                                <a href={data.socials.facebook} target="_blank" rel="noreferrer"
-                                                   class="text-[#0866FF]">
-                                                    <Facebook class="w-6 h-6"/>
-                                                </a>
-                                    ) :
-                                        <Fragment/>}
-                                {data.socials.instagram ? (
-                                                <a href={data.socials.instagram} target="_blank" rel="noreferrer"
-                                                   class="text-[#FF0069]">
-                                                    <Instagram class="w-6 h-6"/>
-                                                </a>
-                                    ) :
-                                        <Fragment/>}
-                                {data.socials.github ? (
-                                                <a href={data.socials.github} target="_blank" rel="noreferrer"
-                                                   class="text-[#181717]">
-                                                    <GitHub class="w-6 h-6"/>
-                                                </a>
-                                    ) :
-                                        <Fragment/>}
-                                {data.socials.linkedin ? (
-                                                <a href={data.socials.linkedin} target="_blank" rel="noreferrer"
-                                                   class="text-[#0a66c2]">
-                                                    <LinkedIn class="w-6 h-6"/>
-                                                </a>
-                                    ) :
-                                        <Fragment/>}
-                                {data.socials.website ? (
-                                                <a href={data.socials.website} target="_blank" rel="noreferrer"
-                                                   class="text-primary">
-                                                    <GlobeIcon className="w-6 h-6"/>
-                                                </a>
-                                    ) :
-                                        <Fragment/>}
-                            </div>
-                        </CardHeader>
-                    </Card>
-            ))}
-        </div>
+<Layout title="Our Class Member">
+  <HeaderSection
+    title="Our Class Members"
+    subtitle="Meet the talented students of TERPAL B 24"
+  />
+  <div class="container py-12">
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-16 gap-y-6"
+    >
+      {
+        members.map(({ data }, idx) => (
+          <div data-speed={calcSpeed(idx)}>
+            <ImageHoverable
+              src={data.photo}
+              alt={data.name}
+              class="aspect-square"
+            />
+            <div class="space-y-2 mt-6">
+              <div
+                class="text-3xl text-primary font-extrabold truncate"
+                title={data.name}
+              >
+                {data.name}
+              </div>
+              <p class="text-lg">{data.quote}</p>
+              <div class="inline-flex flex-wrap items-center gap-2">
+                {data.socials.facebook ? (
+                  <SocialLink href={data.socials.facebook} type="facebook" />
+                ) : (
+                  <Fragment />
+                )}
+                {data.socials.instagram ? (
+                  <SocialLink href={data.socials.instagram} type="instagram" />
+                ) : (
+                  <Fragment />
+                )}
+                {data.socials.github ? (
+                  <SocialLink href={data.socials.github} type="github" />
+                ) : (
+                  <Fragment />
+                )}
+                {data.socials.linkedin ? (
+                  <SocialLink href={data.socials.linkedin} type="linkedin" />
+                ) : (
+                  <Fragment />
+                )}
+                {data.socials.website ? (
+                  <SocialLink href={data.socials.website} type="website" />
+                ) : (
+                  <Fragment />
+                )}
+              </div>
+            </div>
+          </div>
+        ))
+      }
     </div>
+  </div>
 </Layout>

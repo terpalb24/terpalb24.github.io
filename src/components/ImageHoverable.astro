@@ -1,0 +1,25 @@
+---
+import type { LocalImageProps } from "astro:assets";
+import { Image } from "astro:assets";
+
+type Props = LocalImageProps & {
+  class?: string;
+  hideOverlay?: boolean;
+};
+
+const { class: className, hideOverlay, ...rest } = Astro.props;
+---
+
+<div class="group">
+  <figure
+    class={`relative rounded-4xl overflow-hidden transition-all group-hover:scale-95 duration-300 group-hover:duration-500 ${className}`}
+  >
+    <Image class="object-cover w-full h-full" {...rest} />
+    {
+      !hideOverlay && (
+        <span class="bg-bg/40 group-hover:opacity-0 transition-all duration-300 absolute inset-0" />
+      )
+    }
+    <slot />
+  </figure>
+</div>

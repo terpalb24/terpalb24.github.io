@@ -1,0 +1,61 @@
+---
+import { Image } from "astro:assets";
+import Hero from "../assets/hero.jpg";
+---
+
+<div
+  data-speed="0.5"
+  class="absolute inset-0 -z-1 flex translate-3d items-center justify-center"
+>
+  <div data-rotated>
+    <figure
+      class="relative aspect-square md:aspect-video w-full max-w-6xl overflow-hidden rounded-4xl"
+      style={{
+        transform: `translate3d(0, 0, 0)`,
+      }}
+    >
+      <Image
+        src={Hero}
+        alt="Our Class Members"
+        class="h-full w-full object-cover object-center"
+      />
+      <span class="bg-bg/50 absolute inset-0"></span>
+    </figure>
+  </div>
+</div>
+<script>
+  import * as THREE from "three";
+  const el = document.querySelector("[data-rotated]")! as HTMLElement;
+  let windowWidth = window.innerWidth;
+  let windowHeight = window.innerHeight;
+
+  window.addEventListener("resize", () => {
+    windowWidth = window.innerWidth;
+    windowHeight = window.innerHeight;
+  });
+
+  let targetMouse = new THREE.Vector2();
+  let currentMouse = new THREE.Vector2();
+
+  window.addEventListener("mousemove", (e) => {
+    targetMouse.set(e.clientX, e.clientY);
+  });
+
+  let rotationX = 0;
+  let rotationY = 0;
+
+  const animate = () => {
+    currentMouse.lerp(targetMouse, 0.03);
+    const targetX = (currentMouse.y - windowHeight / 2) / 30;
+    const targetY = -(currentMouse.x - windowWidth / 2) / 30;
+
+    rotationX += (targetX - rotationX) * 0.1;
+    rotationY += (targetY - rotationY) * 0.1;
+
+    el.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+
+    requestAnimationFrame(animate);
+  };
+
+  animate();
+</script>
