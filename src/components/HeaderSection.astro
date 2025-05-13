@@ -40,10 +40,10 @@ const { title, subtitle } = Astro.props;
       let split2 = SplitText.create(".page-subtitle", { type: "chars, words" });
 
       gsap.from(split2.chars, {
-        duration: 0.7,
+        duration: 0.5,
         x: 150,
         autoAlpha: 0,
-        delay: 0.5,
+        delay: 1.5,
         ease: "power4",
         stagger: 0.04,
       });
