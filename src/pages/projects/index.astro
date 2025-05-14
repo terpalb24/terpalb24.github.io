@@ -73,7 +73,11 @@ const sortedSemesters = uniqueSemesters.sort((a, b) => a - b);
                                 </div>
                             </ImageHoverable>
                             <div class="mt-6">
-                                <div class="flex gap-2 flex-wrap">
+                                <h3 class="font-black text-4xl text-primary">
+                                    {data.name}
+                                </h3>
+                                <h2 class="text-lg mt-4">{data.title}</h2>
+                                <div class="mt-4 flex gap-2 flex-wrap">
                                     <Image
                                         src={manpro!.data.photo}
                                         alt={manpro!.data.name}
@@ -89,10 +93,6 @@ const sortedSemesters = uniqueSemesters.sort((a, b) => a - b);
                                         />
                                     ))}
                                 </div>
-                                <h3 class="mt-4 font-black text-4xl text-primary">
-                                    {data.name}
-                                </h3>
-                                <h2 class="text-lg mt-4">{data.title}</h2>
                                 {data.link && (
                                     <div class="mt-4">
                                         <a

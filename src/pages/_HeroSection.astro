@@ -59,6 +59,7 @@ import HeroImage from "./_HeroImage.astro";
           autoAlpha: 0,
           stagger: 0.05,
           delay: 0.5,
+          onComplete: () => splitText.revert(),
         });
       },
     });

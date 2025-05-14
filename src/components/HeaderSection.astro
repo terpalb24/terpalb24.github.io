@@ -26,26 +26,34 @@ const { title, subtitle } = Astro.props;
   import { SplitText } from "gsap/SplitText";
 
   document.addEventListener("astro:page-load", () => {
-    let split = SplitText.create(".page-title", { type: "chars, words" });
-
-    gsap.from(split.chars, {
-      duration: 0.5,
-      y: 50,
-      autoAlpha: 0,
-      stagger: 0.05,
-      delay: 0.5,
+    SplitText.create(".page-title", {
+      type: "chars, words",
+      onSplit(splitText) {
+        gsap.from(splitText.chars, {
+          duration: 0.5,
+          y: 50,
+          autoAlpha: 0,
+          stagger: 0.05,
+          delay: 0.5,
+          onComplete: () => splitText.revert(),
+        });
+      },
     });
 
     if (document.querySelector(".page-subtitle")) {
-      let split2 = SplitText.create(".page-subtitle", { type: "chars, words" });
-
-      gsap.from(split2.chars, {
-        duration: 0.5,
-        x: 150,
-        autoAlpha: 0,
-        delay: 1.5,
-        ease: "power4",
-        stagger: 0.04,
+      SplitText.create(".page-subtitle", {
+        type: "chars, words",
+        onSplit(splitText) {
+          gsap.from(splitText.chars, {
+            duration: 0.5,
+            x: 150,
+            autoAlpha: 0,
+            delay: 1,
+            ease: "power4",
+            stagger: 0.04,
+            onComplete: () => splitText.revert(),
+          });
+        },
       });
     }
   });
