@@ -1,4 +1,4 @@
-name: Deploy Astro to GitHub Pages
+name: Deploy NextJS to GitHub Pages
 
 on:
   push:
@@ -25,6 +25,7 @@ jobs:
         name: Install pnpm
         with:
           run_install: false
+          version: 10.15
 
       - name: Install Node.js
         uses: actions/setup-node@v4
