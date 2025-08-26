@@ -10,7 +10,7 @@ import ProgressBar from "@/components/layout/progress-bar";
 const lato = Lato({
   variable: "--font-lato",
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["400", "700", "900"],
 });
 
 export const metadata: Metadata = {

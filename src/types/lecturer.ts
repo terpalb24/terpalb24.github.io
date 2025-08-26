@@ -1,4 +1,4 @@
-import type { Lecturer, Subject } from "content-collections";
+import type { Lecturer, Project, Subject } from "content-collections";
 
 export type LecturerWithRelations = Lecturer & {
   subjects: {
@@ -6,4 +6,5 @@ export type LecturerWithRelations = Lecturer & {
     isTheory: boolean;
     isPractice: boolean;
   }[];
+  projects: Project[];
 };

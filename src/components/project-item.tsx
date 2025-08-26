@@ -20,13 +20,13 @@ export default function ProjectItem({
         width={720}
       >
         <div className="flex absolute top-6 left-6 flex-wrap gap-2">
-          <span className="bg-secondary text-bg uppercase font-bold text-sm px-2 py-1 rounded-full">
+          <span className="bg-secondary text-bg uppercase font-bold text-xs px-2 py-1 rounded-full">
             {project.code}
           </span>
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="bg-primary text-bg uppercase font-bold text-sm px-2 py-1 rounded-full"
+              className="bg-primary text-bg uppercase font-bold text-xs px-2 py-1 rounded-full"
             >
               {tag}
             </span>

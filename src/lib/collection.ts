@@ -101,6 +101,10 @@ export const listLecturers = (): LecturerWithRelations[] => {
         item.practice === lecturer._meta.path,
     );
 
+    const projects = allProjects.filter(
+      (item) => item.manpro === lecturer._meta.path,
+    );
+
     return {
       ...lecturer,
       subjects: currentSubjects.map((subject) => ({
@@ -108,6 +112,7 @@ export const listLecturers = (): LecturerWithRelations[] => {
         isTheory: subject.theory === lecturer._meta.path,
         isPractice: subject.practice === lecturer._meta.path,
       })),
+      projects,
     };
   });
 };

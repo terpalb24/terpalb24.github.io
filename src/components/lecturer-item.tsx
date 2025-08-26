@@ -25,24 +25,35 @@ export default function LecturerItem({ lecutrer }: Props) {
         <p className="text-sm text-muted-foreground mt-1">
           {lecutrer.specialization}
         </p>
-        {lecutrer.subjects && lecutrer.subjects.length > 0 ? (
+        {(lecutrer.subjects && lecutrer.subjects.length > 0) ||
+        (lecutrer.projects && lecutrer.projects.length > 0) ? (
           <div className="flex flex-wrap gap-4 mt-2">
             {lecutrer.subjects.map(({ isPractice, isTheory, subject }) => {
               return (
-                <div key={subject.code} className="flex gap-4">
-                  <span
-                    className="font-bold text-secondary"
-                    title={`${subject.title} (${
-                      isTheory && isPractice
-                        ? "Teori & Praktikum"
-                        : isTheory
-                          ? "Teori"
-                          : "Praktikum"
-                    })`}
-                  >
-                    {subject.code}
-                  </span>
-                </div>
+                <span
+                  key={subject.code}
+                  className="font-bold text-secondary"
+                  title={`${subject.title} (${
+                    isTheory && isPractice
+                      ? "Teori & Praktikum"
+                      : isTheory
+                        ? "Teori"
+                        : "Praktikum"
+                  })`}
+                >
+                  {subject.code}
+                </span>
+              );
+            })}
+            {lecutrer.projects.map((project) => {
+              return (
+                <span
+                  key={project.code}
+                  className="font-bold text-secondary"
+                  title={project.title}
+                >
+                  {project.code}
+                </span>
               );
             })}
           </div>
