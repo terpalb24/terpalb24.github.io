@@ -17,6 +17,7 @@ export default function ProjectItem({
         className="aspect-video"
         hideOverlay
         loading="lazy"
+        width={720}
       >
         <div className="flex absolute top-6 left-6 flex-wrap gap-2">
           <span className="bg-secondary text-bg uppercase font-bold text-sm px-2 py-1 rounded-full">
@@ -41,6 +42,8 @@ export default function ProjectItem({
             alt={manpro.name}
             title={manpro.name}
             className="w-14 h-14 object-cover object-center rounded-full"
+            width={56}
+            height={56}
           />
           {teams.map((member) => (
             <ImagePlaceholder
@@ -49,6 +52,8 @@ export default function ProjectItem({
               alt={member.name}
               title={member.name}
               className="w-14 h-14 object-cover object-center rounded-full"
+              width={56}
+              height={56}
             />
           ))}
         </div>

@@ -14,6 +14,7 @@ export default function MemberItem({ member }: Props) {
         alt={member.name}
         className="aspect-square"
         loading="lazy"
+        width={500}
       >
         <div className="flex absolute bottom-6 left-6 right-6 justify-center flex-wrap gap-4">
           {member.isLeader && (

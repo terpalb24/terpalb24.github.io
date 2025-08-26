@@ -23,6 +23,7 @@ export default function ScheduleItem({ item }: Props) {
           src={item.lecturer.photo}
           alt={item.lecturer.name}
           className="w-12 object-cover object-center h-12 rounded-full"
+          width={50}
         />
         <div className="flex flex-col gap-1">
           <div className="text-lg font-bold">{item.lecturer.name}</div>

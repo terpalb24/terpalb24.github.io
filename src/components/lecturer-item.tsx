@@ -12,6 +12,7 @@ export default function LecturerItem({ lecutrer }: Props) {
         src={lecutrer.photo}
         alt={lecutrer.name}
         className="aspect-square"
+        width={350}
       />
       <div className="mt-6">
         <div className="text-sm font-bold">NIK: {lecutrer.nik}</div>
