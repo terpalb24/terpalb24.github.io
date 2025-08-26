@@ -7,7 +7,7 @@ tags:
   - Laravel
   - Tailwind CSS
   - Alpine JS
-manpro: 102020-hilda
+manpro: 122282-cahya
 cover: ./cover.png
 link: https://pbl.polibatam.ac.id/pamerin/detail.php?title=pengembangan-web-shilau-polibatam&id=MzM3MA==&ta=Ng==&id_tim=Mzg2MQ==
 teams:
