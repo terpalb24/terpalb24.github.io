@@ -16,6 +16,8 @@ import Zoom from "yet-another-react-lightbox/plugins/zoom";
 
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
   DownloadIcon,
   ExpandIcon,
   PauseIcon,
@@ -62,6 +64,8 @@ export default function GalleryContents({ images }: Props) {
           iconClose: () => <XIcon />,
           iconZoomIn: () => <ZoomInIcon />,
           iconZoomOut: () => <ZoomOutIcon />,
+          iconNext: () => <ChevronRightIcon className="size-8" />,
+          iconPrev: () => <ChevronLeftIcon className="size-8" />,
         }}
       />
     </Fragment>
