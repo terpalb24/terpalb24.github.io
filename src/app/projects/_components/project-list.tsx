@@ -55,7 +55,7 @@ export default function ProjectList({ projects, semesters }: Props) {
           ))}
         </div>
       </HeaderSection>
-      <main className="container py-12">
+      <main className="container py-12 overflow-x-hidden">
         <AnimatePresence initial={false} mode="wait">
           <motion.div
             key={currentSemester}

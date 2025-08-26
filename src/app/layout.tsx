@@ -9,6 +9,7 @@ import ProgressBar from "@/components/layout/progress-bar";
 
 const lato = Lato({
   variable: "--font-lato",
+  subsets: ["latin"],
   weight: ["400", "700"],
 });
 
@@ -33,8 +34,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${lato.variable} antialiased overflow-x-hidden`}>
+    <html lang="en" className={`${lato.variable} antialiased`}>
+      <body className={`overflow-x-hidden`}>
         <GlowBackground />
         <Header />
         <ProgressBar>{children}</ProgressBar>

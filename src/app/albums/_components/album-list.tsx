@@ -52,7 +52,7 @@ export default function AlbumList({ albums, years }: Props) {
           ))}
         </div>
       </HeaderSection>
-      <main className="container py-12">
+      <main className="container py-12 overflow-x-hidden">
         <AnimatePresence initial={false} mode="wait">
           <motion.div
             key={currentYear}
