@@ -8,7 +8,7 @@ tags:
 manpro: 102020-hilda
 cover: ./cover.jpg
 link: https://pbl.polibatam.ac.id/pamerin/detail.php?title=aplikasi-pengajuan-dosen-pembimbing-tugas-akhir&id=MjU1OQ==&ta=NQ==&id_tim=MjgwNA==
-team:
+teams:
   - 4342401035-hasan
   - 4342401043-rizky
   - 4342401052-dhiyaa

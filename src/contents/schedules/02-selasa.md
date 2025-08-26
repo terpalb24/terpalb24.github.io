@@ -3,12 +3,12 @@ title: Selasa
 items:
   - startAt: 07:50
     endAt: 11:10
-    subjectCode: rpl209
+    subjectCode: rpl317
     type: practice
-    room: TA 12.4
+    room: TA 12.2
   - startAt: 12:50
-    endAt: 14:30
-    subjectCode: rpl208
-    type: theory
-    room: Online
+    endAt: 16:10
+    subjectCode: rpl313
+    type: practice
+    room: TA 11.2
 ---

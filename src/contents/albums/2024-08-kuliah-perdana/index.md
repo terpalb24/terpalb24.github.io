@@ -9,5 +9,5 @@ contents:
   - ./portrait.jpg
 ---
 
-Perkuliahan perdana hari pertama di Gedung TA 12.4. Hari Senin, 26 Agustus 2024 bersama Pak Gilang dalam mata kuliah
+Perkuliahan perdana hari pertama di Gedung TA 12.4 bersama Pak Gilang dalam mata kuliah
 Pemrograman Berbasis Web.

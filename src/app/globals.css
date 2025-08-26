@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-lato);
+  --color-primary: #f9c013;
+  --color-secondary: #00bcff;
+  --color-bg: #071527;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    @apply bg-bg text-white;
+  }
+
+  .ripple {
+    @apply bg-primary text-bg relative scale-100 overflow-hidden transition-all duration-300;
+  }
+  .ripple.ripple-white {
+    @apply bg-white;
+  }
+  .ripple:hover {
+    @apply scale-95;
+  }
+
+  .ripple .ripple-bg,
+  .ripple .ripple-bg2 {
+    @apply bg-primary border-secondary absolute top-0 left-0 -z-1 aspect-square w-full min-w-32 origin-bottom-left -translate-x-1/2 translate-y-1/2 scale-0 rounded-full border-24 transition-all delay-100 duration-800 ease-in-out;
+  }
+  .ripple.ripple-white .ripple-bg,
+  .ripple.ripple-white .ripple-bg2 {
+    @apply bg-white;
+  }
+  .ripple:hover .ripple-bg,
+  .ripple:hover .ripple-bg2 {
+    @apply scale-200 delay-0;
+  }
+  .ripple .ripple-bg2 {
+    @apply bg-primary border-white delay-0;
+  }
+  .ripple:hover .ripple-bg2 {
+    @apply delay-100;
+  }
+  .ripple.ripple-white .ripple-bg2 {
+    @apply border-primary bg-white;
+  }
+
+  .yarl__root {
+    --yarl__thumbnails_thumbnail_background: var(--color-bg);
+    --yarl__thumbnails_thumbnail_border_color: var(--color-bg);
+    --yarl__thumbnails_thumbnail_active_border_color: var(--color-primary);
+  }
+  .yarl__container {
+    @apply  !bg-bg/80 backdrop-blur-xs;
+  }
+  .yarl__thumbnails_container {
+    @apply !bg-bg/95 backdrop-blur-xs;
+  }
+  .yarl__thumbnails_vignette {
+    --yarl__color_backdrop: var(--color-bg);
+  }
+  .yarl__button {
+    --yarl__color_button: var(--color-white);
+    --yarl__color_button_active: var(--color-primary);
+    filter: none !important;
+  }
+  .yarl__toolbar {
+    @apply !bg-bg/80 rounded-full !top-4 !right-4 backdrop-blur-xs;
+  }
+}
+
+@utility container {
+  @apply mx-auto px-6;
+}
