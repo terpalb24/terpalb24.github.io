@@ -21,6 +21,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Cache Next.js build cache
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-nextjs-cache-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-cache-
+
+      - name: Cache Next.js Exported Images
+        uses: actions/cache@v4
+        with:
+          path: |
+            public/optimized-images
+            public/images
+          key: ${{ runner.os }}-nextjs-exported-images
+          restore-keys: |
+            ${{ runner.os }}-nextjs-exported-images
+
+
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:

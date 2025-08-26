@@ -19,7 +19,11 @@ export default function ImageHoverable({
       <figure
         className={`relative rounded-4xl overflow-hidden transition-all group-hover:scale-95 duration-300 group-hover:duration-500 ${className}`}
       >
-        <ImagePlaceholder className="object-cover w-full h-full" {...rest} />
+        <ImagePlaceholder
+          className="object-cover w-full h-full"
+          placeholder="blur"
+          {...rest}
+        />
         {!hideOverlay && (
           <span className="bg-bg/40 group-hover:opacity-0 transition-all duration-300 absolute inset-0 pointer-events-none" />
         )}
