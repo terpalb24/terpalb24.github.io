@@ -63,6 +63,7 @@ export default function Header() {
             src={Logo}
             alt="Logo"
             className="h-12 lg:h-16 w-auto p-2"
+            placeholder="empty"
           />
         </Link>
         <nav
