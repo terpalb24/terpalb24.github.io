@@ -10,5 +10,5 @@ items:
     endAt: 16:10
     subjectCode: rpl313
     type: practice
-    room: TA 11.2
+    room: TA 11.3
 ---
