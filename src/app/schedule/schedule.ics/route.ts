@@ -42,6 +42,7 @@ export async function GET() {
         summary: `${course.subject.code} - ${course.subject.title} (${course.type === "practice" ? "Praktikum" : "Teori"})`,
         description: `Dosen: ${course.lecturer.name}`,
         location: course.room,
+        url: course.link,
       });
 
       const excludeDates: Dayjs[] = [];
