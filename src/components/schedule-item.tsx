@@ -1,3 +1,4 @@
+import { ExternalLinkIcon } from "lucide-react";
 import type { ScheduleWithRelation } from "@/types/schedule";
 import ImagePlaceholder from "./image-placeholder";
 
@@ -8,7 +9,7 @@ export default function ScheduleItem({ item }: Props) {
   return (
     <div className="grid group grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
       <div className="md:text-right">
-        <div className="font-bold mt-2">{item.room}</div>
+        <div className="font-bold">{item.room}</div>
         <div
           className={`text-2xl font-bold group-odd:text-primary group-even:text-secondary`}
         >
@@ -17,6 +18,17 @@ export default function ScheduleItem({ item }: Props) {
         <div className="text-3xl leading-normal lg:leading-normal lg:text-4xl font-bold mt-2">
           {item.subject.title}
         </div>
+        {item.link && (
+          <a
+            href={item.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group-odd:text-primary group-even:text-secondary font-semibold inline-flex gap-2 items-center"
+          >
+            <span>Join Link</span>
+            <ExternalLinkIcon size={16} strokeWidth={2.5} />
+          </a>
+        )}
       </div>
       <div className="flex items-center gap-4 mt-4">
         <ImagePlaceholder

@@ -140,6 +140,7 @@ const schedules = defineCollection({
         subjectCode: z.string(),
         type: z.enum(["theory", "practice"]),
         room: z.string(),
+        link: z.string().optional(),
       }),
     ),
   }),
