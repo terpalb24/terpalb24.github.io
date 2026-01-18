@@ -9,8 +9,11 @@ import type { StaticImageData } from "next/image";
 import { z } from "zod";
 
 const imageTransform = (folder: string, directory: string, value: string) => {
-  const imagePath = join(folder, directory, value);
-  const image = createDefaultImport<StaticImageData>(`@/contents/${imagePath}`);
+  const rawPath = join(folder, directory, value);
+  
+  const normalizedPath = rawPath.replace(/\\/g, '/');
+  
+  const image = createDefaultImport<StaticImageData>(`@/contents/${normalizedPath}`);
 
   return image;
 };
