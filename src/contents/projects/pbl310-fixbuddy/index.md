@@ -1,6 +1,6 @@
 ---
 code: PBL-TRPL310
-name: FixBuddy
+name: UFix
 title: FixBuddy – Panduan Servis Barang Elektronik
 tags:
   - Dart
