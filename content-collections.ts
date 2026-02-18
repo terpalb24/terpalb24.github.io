@@ -57,6 +57,7 @@ const albums = defineCollection({
     location: z.string(),
     cover: z.string(),
     contents: z.array(z.string()),
+    content: z.string(),
   }),
   transform: async (data, context) => {
     const html = await compileMarkdown(context, data);
@@ -150,5 +151,5 @@ const schedules = defineCollection({
 });
 
 export default defineConfig({
-  collections: [members, albums, lecturers, subjects, projects, schedules],
+  content: [members, albums, lecturers, subjects, projects, schedules],
 });

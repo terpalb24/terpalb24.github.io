@@ -1,10 +1,14 @@
 ---
 title: Jum'at
 items:
-  - startAt: 15:20
-    endAt: 17:00
-    subjectCode: rpl313
+  - startAt: 09:30
+    endAt: 11:10
+    subjectCode: rpl421
     type: theory
     room: Online
-    link: https://zoom.us/j/92261521773?pwd=vMURkA2Js078Jq8QdP7hquHAk8wyhb.1
+  - startAt: 13:40
+    endAt: 17:00
+    subjectCode: rpl426
+    type: practice
+    room: TA 11.4
 ---

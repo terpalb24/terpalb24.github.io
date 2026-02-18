@@ -1,19 +1,14 @@
 ---
 title: Rabu
 items:
-  - startAt: 07:50
-    endAt: 09:30
-    subjectCode: rpl318
-    type: theory
-    room: Online
-  - startAt: 10:20
-    endAt: 13:40
-    subjectCode: rpl319
+  - startAt: 08:40
+    endAt: 12:00
+    subjectCode: rpl423
     type: practice
-    room: TA 11.4
+    room: TA 12.2
   - startAt: 13:40
     endAt: 17:00
-    subjectCode: rpl318
+    subjectCode: rpl424
     type: practice
     room: TA 12.2
 ---
