@@ -84,7 +84,6 @@ function renderNextImage(
       }}
     >
       <ExportedImage
-        fill
         src={photo}
         alt={alt}
         title={title}

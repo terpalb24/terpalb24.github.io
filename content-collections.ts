@@ -10,10 +10,12 @@ import { z } from "zod";
 
 const imageTransform = (folder: string, directory: string, value: string) => {
   const rawPath = join(folder, directory, value);
-  
-  const normalizedPath = rawPath.replace(/\\/g, '/');
-  
-  const image = createDefaultImport<StaticImageData>(`@/contents/${normalizedPath}`);
+
+  const normalizedPath = rawPath.replace(/\\/g, "/");
+
+  const image = createDefaultImport<StaticImageData>(
+    `@/contents/${normalizedPath}`,
+  );
 
   return image;
 };
@@ -151,5 +153,5 @@ const schedules = defineCollection({
 });
 
 export default defineConfig({
-  content: [members, albums, lecturers, subjects, projects, schedules],
+  collections: [members, albums, lecturers, subjects, projects, schedules],
 });
