@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
-    "@content-collections/core": "0.11.0",
+    "@content-collections/core": "^0.14.1",
     "@content-collections/markdown": "^0.1.4",
     "@content-collections/next": "^0.2.11",
     "@tailwindcss/postcss": "^4",
@@ -34,11 +34,5 @@
     "tailwindcss": "^4",
     "typescript": "^5",
     "zod": "^4.3.6"
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "19.2.14",
-      "@types/react-dom": "19.2.3"
-    }
   }
 }

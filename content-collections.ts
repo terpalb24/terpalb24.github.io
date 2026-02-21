@@ -153,5 +153,5 @@ const schedules = defineCollection({
 });
 
 export default defineConfig({
-  collections: [members, albums, lecturers, subjects, projects, schedules],
+  content: [members, albums, lecturers, subjects, projects, schedules],
 });
