@@ -10,12 +10,12 @@ export const STATIC_CONFIG = {
     {
       title: "Minggu Pengganti ATS",
       start: "2026-04-27T00:00:00",
-      end: "2026-04-03T23:59:59",
+      end: "2026-05-03T23:59:59",
     },
     {
       title: "ATS",
-      start: "2026-04-04T00:00:00",
-      end: "2026-04-17T23:59:59",
+      start: "2026-05-04T00:00:00",
+      end: "2026-05-17T23:59:59",
     },
     {
       title: "Minggu Pengganti AAS",
