@@ -1,8 +1,8 @@
 ---
 title: Selasa
 items:
-  - startAt: 12:50
-    endAt: 14:30
+  - startAt: 15:20
+    endAt: 17:00
     subjectCode: rpl423
     type: theory
     room: Online

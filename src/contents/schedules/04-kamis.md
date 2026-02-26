@@ -3,7 +3,7 @@ title: Kamis
 items:
   - startAt: 07:50
     endAt: 09:30
-    subjectCode: rpl425
+    subjectCode: rpl424
     type: theory
     room: Online
   - startAt: 09:30
@@ -18,7 +18,7 @@ items:
     room: Online
   - startAt: 15:20
     endAt: 17:00
-    subjectCode: rpl424
+    subjectCode: rpl425
     type: theory
     room: Online
 ---
