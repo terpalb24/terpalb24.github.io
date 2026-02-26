@@ -6,6 +6,7 @@ items:
     subjectCode: rpl421
     type: theory
     room: Online
+    link: https://zoom.us/j/96736393581?pwd=2RFF7eonJrCdbtInpVZDbJUpTDsY7L.1
   - startAt: 13:40
     endAt: 17:00
     subjectCode: rpl426
