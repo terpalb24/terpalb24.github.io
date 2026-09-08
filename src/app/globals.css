@@ -54,7 +54,7 @@
     --yarl__thumbnails_thumbnail_active_border_color: var(--color-primary);
   }
   .yarl__container {
-    @apply  !bg-bg/80 backdrop-blur-xs;
+    @apply !bg-bg/80 backdrop-blur-xs;
   }
   .yarl__thumbnails_container {
     @apply !bg-bg/95 backdrop-blur-xs;

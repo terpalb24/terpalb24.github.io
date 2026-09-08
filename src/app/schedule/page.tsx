@@ -1,8 +1,8 @@
-import { listSchedules } from "@/lib/collection";
-import { STATIC_CONFIG } from "@/config";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import { STATIC_CONFIG } from "@/config";
+import { listSchedules } from "@/lib/collection";
 import { getAdjustedTimeRange } from "@/lib/schedule";
 import ScheduleList from "./_components/schedule-list";
 

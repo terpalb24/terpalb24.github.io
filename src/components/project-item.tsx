@@ -63,6 +63,7 @@ export default function ProjectItem({
               href={project.link}
               className="inline-flex font-bold gap-2 items-center text-primary"
               target="_blank"
+              rel="noopener"
             >
               <ExternalLinkIcon />
               <span>Read More</span>
