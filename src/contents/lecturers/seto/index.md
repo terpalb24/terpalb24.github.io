@@ -1,6 +1,6 @@
 ---
 nik: 000000
-code: Syam
-name: Syam Sarosa
+code: Seto
+name: Arseto Pinontoan
 specialization: "-"
 ---
