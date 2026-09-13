@@ -1,31 +1,26 @@
 export const STATIC_CONFIG = {
-  START_SEMESTER: "2026-02-23T00:00:00",
-  END_SEMESTER: "2026-07-26T23:59:59",
+  START_SEMESTER: "2026-09-07T00:00:00",
+  END_SEMESTER: "2027-01-17T23:59:59",
   BLOCKING_TIME: [
     {
-      title: "Libur Lebaran",
-      start: "2026-03-16T00:00:00",
-      end: "2026-03-29T23:59:59",
-    },
-    {
       title: "Minggu Pengganti ATS",
-      start: "2026-04-27T00:00:00",
-      end: "2026-05-03T23:59:59",
+      start: "2026-10-26T00:00:00",
+      end: "2026-10-30T23:59:59",
     },
     {
       title: "ATS",
-      start: "2026-05-04T00:00:00",
-      end: "2026-05-17T23:59:59",
+      start: "2026-11-02T00:00:00",
+      end: "2026-11-13T23:59:59",
     },
     {
       title: "Minggu Pengganti AAS",
-      start: "2026-07-06T00:00:00",
-      end: "2026-07-12T23:59:59",
+      start: "2027-01-04T00:00:00",
+      end: "2027-01-10T23:59:59",
     },
     {
       title: "AAS",
-      start: "2026-07-13T00:00:00",
-      end: "2026-07-26T23:59:59",
+      start: "2027-01-11T00:00:00",
+      end: "2027-01-24T23:59:59",
     },
   ],
   RAMADHAN_START: "2026-02-19T00:00:00",
