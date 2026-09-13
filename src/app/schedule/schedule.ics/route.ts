@@ -7,7 +7,7 @@ import ical, {
 } from "ical-generator";
 import { STATIC_CONFIG } from "@/config";
 import { listSchedules } from "@/lib/collection";
-import { getAdjustedTimeRange } from "@/lib/schedule";
+import { getAdjustedTimeRange, getRamadhanPeriod } from "@/lib/schedule";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -73,8 +73,7 @@ export async function GET() {
   const schedules = listSchedules();
   const semesterStart = dayjs.tz(STATIC_CONFIG.START_SEMESTER, TIMEZONE);
   const semesterEnd = dayjs.tz(STATIC_CONFIG.END_SEMESTER, TIMEZONE);
-  const ramadhanStart = dayjs.tz(STATIC_CONFIG.RAMADHAN_START, TIMEZONE);
-  const ramadhanEnd = dayjs.tz(STATIC_CONFIG.RAMADHAN_END, TIMEZONE);
+  const ramadhan = getRamadhanPeriod();
 
   const calendar = ical({
     name: "Terpal B24 Schedule",
@@ -85,36 +84,58 @@ export async function GET() {
   schedules.forEach((day) => {
     const periods: { start: Dayjs; end: Dayjs; isRamadhan: boolean }[] = [];
 
-    const beforeRamadhanEnd = ramadhanStart.subtract(1, "second");
-    if (isOnOrBefore(semesterStart, beforeRamadhanEnd)) {
+    if (!ramadhan) {
       periods.push({
         start: semesterStart,
-        end: beforeRamadhanEnd,
-        isRamadhan: false,
-      });
-    }
-
-    const ramadhanPeriodStart = isOnOrAfter(semesterStart, ramadhanStart)
-      ? semesterStart
-      : ramadhanStart;
-    const ramadhanPeriodEnd = isOnOrBefore(semesterEnd, ramadhanEnd)
-      ? semesterEnd
-      : ramadhanEnd;
-    if (isOnOrBefore(ramadhanPeriodStart, ramadhanPeriodEnd)) {
-      periods.push({
-        start: ramadhanPeriodStart,
-        end: ramadhanPeriodEnd,
-        isRamadhan: true,
-      });
-    }
-
-    const afterRamadhanStart = ramadhanEnd.add(1, "second");
-    if (isOnOrAfter(semesterEnd, afterRamadhanStart)) {
-      periods.push({
-        start: afterRamadhanStart,
         end: semesterEnd,
         isRamadhan: false,
       });
+    } else {
+      const { start: ramadhanStart, end: ramadhanEnd } = ramadhan;
+
+      const beforeRamadhanEnd = ramadhanStart.subtract(1, "second");
+      const beforeRamadhanPeriodEnd = isOnOrBefore(
+        semesterEnd,
+        beforeRamadhanEnd,
+      )
+        ? semesterEnd
+        : beforeRamadhanEnd;
+      if (isOnOrBefore(semesterStart, beforeRamadhanPeriodEnd)) {
+        periods.push({
+          start: semesterStart,
+          end: beforeRamadhanPeriodEnd,
+          isRamadhan: false,
+        });
+      }
+
+      const ramadhanPeriodStart = isOnOrAfter(semesterStart, ramadhanStart)
+        ? semesterStart
+        : ramadhanStart;
+      const ramadhanPeriodEnd = isOnOrBefore(semesterEnd, ramadhanEnd)
+        ? semesterEnd
+        : ramadhanEnd;
+      if (isOnOrBefore(ramadhanPeriodStart, ramadhanPeriodEnd)) {
+        periods.push({
+          start: ramadhanPeriodStart,
+          end: ramadhanPeriodEnd,
+          isRamadhan: true,
+        });
+      }
+
+      const afterRamadhanStart = ramadhanEnd.add(1, "second");
+      const afterRamadhanPeriodStart = isOnOrAfter(
+        semesterStart,
+        afterRamadhanStart,
+      )
+        ? semesterStart
+        : afterRamadhanStart;
+      if (isOnOrBefore(afterRamadhanPeriodStart, semesterEnd)) {
+        periods.push({
+          start: afterRamadhanPeriodStart,
+          end: semesterEnd,
+          isRamadhan: false,
+        });
+      }
     }
 
     day.items.forEach((course) => {

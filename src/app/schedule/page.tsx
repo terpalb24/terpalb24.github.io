@@ -1,9 +1,8 @@
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
-import { STATIC_CONFIG } from "@/config";
 import { listSchedules } from "@/lib/collection";
-import { getAdjustedTimeRange } from "@/lib/schedule";
+import { getAdjustedTimeRange, getRamadhanPeriod } from "@/lib/schedule";
 import ScheduleList from "./_components/schedule-list";
 
 dayjs.extend(utc);
@@ -13,11 +12,11 @@ export default function Schedule() {
   const schedules = listSchedules();
 
   const now = dayjs.tz(new Date(), "Asia/Jakarta");
+  const ramadhan = getRamadhanPeriod();
   const isRamadhan =
-    (now.isAfter(dayjs.tz(STATIC_CONFIG.RAMADHAN_START, "Asia/Jakarta")) ||
-      now.isSame(dayjs.tz(STATIC_CONFIG.RAMADHAN_START, "Asia/Jakarta"))) &&
-    (now.isBefore(dayjs.tz(STATIC_CONFIG.RAMADHAN_END, "Asia/Jakarta")) ||
-      now.isSame(dayjs.tz(STATIC_CONFIG.RAMADHAN_END, "Asia/Jakarta")));
+    !!ramadhan &&
+    (now.isAfter(ramadhan.start) || now.isSame(ramadhan.start)) &&
+    (now.isBefore(ramadhan.end) || now.isSame(ramadhan.end));
 
   const adjustedSchedules = schedules.map((day) => ({
     ...day,

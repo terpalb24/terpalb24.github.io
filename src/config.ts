@@ -23,8 +23,9 @@ export const STATIC_CONFIG = {
       end: "2027-01-24T23:59:59",
     },
   ],
-  RAMADHAN_START: "2026-02-19T00:00:00",
-  RAMADHAN_END: "2026-03-15T23:59:59",
+  // Ramadhan is optional — set to null when the semester has no Ramadhan period.
+  RAMADHAN_START: null as string | null,
+  RAMADHAN_END: null as string | null,
   RAMADHAN_TIME_MAPPING: {
     MONDAY_TO_THURSDAY: {
       "07:50": "08:00",
