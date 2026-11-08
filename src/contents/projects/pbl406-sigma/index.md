@@ -1,6 +1,6 @@
 ---
 code: PBL-TRPL406
-name: Sigma
+name: SIGMA
 title: "Guardian Stick (Smart Cane): Rancang Bangun Tongkat Pintar Berbasis IoT dan Artificial Intelligence untuk Deteksi Jatuh (Fall Detection) dan Monitoring Lokasi Real-Time bagi Tunanetra dan Lansia"
 tags:
   - Go

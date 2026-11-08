@@ -1,6 +1,6 @@
 ---
 code: PBL-TRPL414
-name: Pilars
+name: PILARS
 title: Pengembangan Sistem Tempat Sampah Pintar Berbasis IoT dengan Klasifikasi Organik dan Non-Organik Menggunakan Sensor Multi-Parameter
 tags:
   - Node.js

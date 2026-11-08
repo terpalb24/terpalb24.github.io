@@ -1,6 +1,6 @@
 ---
 code: PBL-TRPL407
-name: GLOVOCA
+name: Glovoca
 title: Pengembangan Smart Glove Berbasis Internet of Things sebagai Penerjemah Bahasa Isyarat ke Suara
 tags:
   - Python

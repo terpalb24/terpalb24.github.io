@@ -1,6 +1,6 @@
 ---
 code: PBL-TRPL401
-name: Pleco
+name: PLECO
 title: IoT-Based Autonomous Ocean Trash Collector
 tags:
   - PHP
